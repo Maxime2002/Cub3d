@@ -5,7 +5,11 @@ LIBDIR = ../minilibx-linux
 SRCS	=	main.c	\
 			ft_error.c \
 			utils/ft_strlen.c \
+			utils/get_next_line.c \
+			utils/get_next_line_utils.c \
+			utils/ft_strjoin_free.c \
 			parcing/ft_parcing.c \
+			parcing/ft_init_map_and_arg.c \
 
 OBJ =	${SRCS:.c=.o}
 
