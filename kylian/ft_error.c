@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:05:50 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 14:06:33 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/05 14:49:35 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,10 @@ int	print_error_message(int error_code)
 	if (error_code == ERRCODE_MALLOC)
 		ft_print_error(ERRMSG_MALLOC);
 	return (1);
+}
+
+void *print_error_message_void(int error_code)
+{
+	print_error_message(error_code);
+	return (NULL);
 }

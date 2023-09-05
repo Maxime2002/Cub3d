@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_parcing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:59:33 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 14:50:57 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/09/05 14:45:09 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/09/05 14:52:19 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int main (int argc, char **argv)
+t_info *ft_parcing(int argc, char **argv)
 {
-	t_info info;
-
-	info = ft_parcing(argc, argv);
-	(void) info;
-	return (0);
+	if (argc != 2)
+		return (print_error_message_void(ERRCODE_NB_ARG));
+	(void) argv;
+	return (NULL);
 }
