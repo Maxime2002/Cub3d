@@ -3,6 +3,8 @@ NAME	=	cub3d
 LIBDIR = ../minilibx-linux
 
 SRCS	=	main.c	\
+			ft_error.c \
+			utils/ft_strlen.c \
 
 OBJ =	${SRCS:.c=.o}
 
