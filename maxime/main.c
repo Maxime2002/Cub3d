@@ -13,115 +13,167 @@
 #include"cub3d.h"
 # include <math.h>
 
-void	render(int premAff, float w, float h, float posX, float posY, float DirX, float DirY, float PlaneX, float PlaneY, void *img, int carte[5][5])
+
+void	init_struct(t_ray *ray)
 {
-		premAff = 0;
-		(void) premAff;
-		float x = 0;
-		float y = 0;
-		while (x <= w)
+	ray->w = 1600;
+	ray->h = 900;
+	ray->posX = 2;
+	ray->posY = 2;
+	ray->DirX = -1;
+	ray->DirY = 0;
+	ray->PlaneX = 0;
+	ray->PlaneY = 1;
+	
+	ray->x = 0;
+	ray->camX = (2 * ray->x / ray->w) - 1;
+	ray->rayPosX = ray->posX;
+	ray->rayPosY = ray->posY;
+	ray->rayDirX = ray->DirX + ray->PlaneX * ray->camX;
+	ray->rayDirY = ray->DirY + ray->PlaneY * ray->camX;
+			
+	ray->mapX = round(ray->rayPosX);
+	ray->mapY = round(ray->rayPosY);
+	ray->deltaDistX = sqrt(1 + (ray->rayDirY * ray->rayDirY)/(ray->rayDirX * ray->rayDirX));
+	ray->deltaDistY = sqrt(1 + (ray->rayDirX * ray->rayDirX)/(ray->rayDirY * ray->rayDirY));
+	ray->hit = 0;
+	
+	ray->line_length = 900;
+}
+
+
+void	render(t_ray *ray, int carte[5][5], void *img)
+{
+	(void)img;
+	while (ray->x <= ray->w)
+	{
+		if (ray->rayDirX < 0)
 		{
-			float	camX = (2 * x / w) - 1;
-			float	rayPosX = posX;
-			float	rayPosY = posY;
-			float	rayDirX = DirX + PlaneX * camX;
-			float	rayDirY = DirY + PlaneY * camX;
-			
-			int	mapX = round(rayPosX);
-			int	mapY = round(rayPosY);
-			float	sideDistX;
-			float	sideDistY;
-			float	deltaDistX = sqrt(1 + (rayDirY * rayDirY)/(rayDirX * rayDirX));
-			float	deltaDistY = sqrt(1 + (rayDirX * rayDirX)/(rayDirY * rayDirY));
-			int	stepX;
-			int	stepY;
-			int	hit = 0;
-			int	side;
-			float	perpWallDist;
-			
-			if (rayDirX < 0)
+			ray->stepX = -1;
+			ray->sideDistX = (ray->rayPosX - ray->mapX) * ray->deltaDistX;
+		}
+		else
+		{
+			ray->stepX = 1;
+			ray->sideDistX = (ray->mapX + 1.0 - ray->rayPosX) * ray->deltaDistX;
+		}
+		if (ray->rayDirY < 0)
+		{
+			ray->stepY = -1;
+			ray->sideDistY = (ray->rayPosY - ray->mapY) * ray->deltaDistY;
+		}
+		else
+		{
+			ray->stepY = 1;
+			ray->sideDistY = (ray->mapY + 1.0 - ray->rayPosY) * ray->deltaDistY;
+		}
+		while (ray->hit == 0)
+		{
+			if (ray->sideDistX < ray->sideDistY)
 			{
-				stepX = -1;
-				sideDistX = (rayPosX - mapX) * deltaDistX;
+				ray->sideDistX += ray->deltaDistX;
+				ray->mapX += ray->stepX;
+				ray->side = 0;
 			}
 			else
 			{
-				stepX = 1;
-				sideDistX = (mapX + 1.0 - rayPosX) * deltaDistX;
-			}
-			if (rayDirY < 0)
-			{
-				stepY = -1;
-				sideDistY = (rayPosY - mapY) * deltaDistY;
-			}
-			else
-			{
-				stepY = 1;
-				sideDistY = (mapY + 1.0 - rayPosY) * deltaDistY;
-			}
-			while (hit == 0)
-			{
-				if (sideDistX < sideDistY)
-				{
-					sideDistX += deltaDistX;
-					mapX += stepX;
-					side = 0;
-				}
-				else
-				{
-					sideDistY += deltaDistY;
-					mapY += stepY;
-					side = 1;
-				}
-				
-				if (carte[mapX][mapY] > 0)
-					hit = 1;
-			}
-			if (side == 0)
-				perpWallDist = fabs((mapX - rayPosX + (1 - stepX) /2) / rayDirX);
-			else
-				perpWallDist = fabs((mapY - rayPosY + (1 - stepY) /2) / rayDirY);
+				ray->sideDistY += ray->deltaDistY;
+				ray->mapY += ray->stepY;
+				ray->side = 1;
+			}	
+			if (carte[ray->mapX][ray->mapY] > 0)
+				ray->hit = 1;
+		}	
+		if (ray->side == 0)
+		{
+			ray->perpWallDist = ((double)ray->mapX - ray->rayPosX + (1 - (double)ray->stepX) /2) / ray->rayDirX;
+		}
+		else
+		{
+			ray->perpWallDist = ((double)ray->mapY - ray->rayPosY + (1 - (double)ray->stepY) /2) / ray->rayDirY;
+		}
+		ray->hauteurLigne = (int)(ray->h / ray->perpWallDist);
+		ray->drawStart = -ray->hauteurLigne / 2 + ray->h / 2;
+		ray->drawEnd = ray->hauteurLigne / 2 + ray->h / 2;
+		if (ray->drawStart < 0)
+			ray->drawStart = 0;
+		if (ray->drawEnd >= ray->h || ray->drawEnd < 0)
+			ray->drawEnd = ray->h - 1;
+	
+	/*
+		int j;
+		int i;
+
+		j = -1;
+		ray->drawEnd = ray->h - ray->drawStart;
+		i = ray->drawEnd;
+		while (++j < ray->drawStart)
+			ray->addr[j * ray->line_length / 4 + ray->x] = -1;
+		//if (j <= ray->drawEnd)
+			//ft_texture(ray, ray->x, j);
+		j = i;
+		while (++j < ray->h)
+			ray->addr[j * ray->line_length / 4 + ray->x] = -1;
 			
-			float	hauteurLigne = fabs(round(h / perpWallDist));
-			int	drawStart = round(-hauteurLigne / 2 + h / 2);
-			int	drawEnd = round(hauteurLigne / 2 + h / 2);
-			if (drawStart < 0)
-				drawStart = 0;
-			if (drawEnd >= h)
-				drawEnd = h - 1;
+		*/
+		
+		int x = ray->x;
+		int color = 255;
+		for (int y = ray->drawStart; y <= ray->drawEnd; y++)
+		{
+			int pixel_index = y * ray->line_length / 4 + x;
+		printf("%d\n", pixel_index);
+			ray->addr[pixel_index] = color;
+		}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	/*			
 			int bpp;
 			int size_line;
 			int endian;
-			char *img_data = mlx_get_data_addr(img, &bpp, &size_line, &endian);
-			y = drawStart;
-			while (y < drawEnd)
-			{
-				int color = 200;
-				if (side == 1)
-					color = 0;
-				int pi = (y * 1600 + x) * 4;
-				img_data[pi] = color;
-				img_data[pi + 1] = color;
-				img_data[pi + 2] = color;
-				img_data[pi + 3] = color;
-				y++;
-			}
-		}
+			char *image_data = mlx_get_data_addr(&img, &bpp, &size_line, &endian);	
+			
+			
+				
+			    for (int y = drawStart; y <= drawEnd; y++)
+   				{
+      
+       			int color = (carte[ray.mapX][ray.mapY] == 0) ? 0xFF0000 : 0xFFFFFF; 
+       			 
+       			 if (ray.side == 0)
+				{
+					ray.perpWallDist = fabs((ray.mapX - ray.rayPosX + (1 - ray.stepX) /2) / ray.rayDirX);
+					ray.mapX += ray.stepX;
+				}
+				else
+				{
+					ray.perpWallDist = fabs((ray.mapY - ray.rayPosY + (1 - ray.stepY) /2) / ray.rayDirY);
+					ray.mapY = ray.stepY;
+				}
+
+       
+       			int pixel_index = (y * size_line) + (ray.x * (bpp / 8));
+				printf("pixel_index = %d, bpp = %d\n", pixel_index, bpp);
+       
+       			 image_data[pixel_index] = (color >> 16) & 0xFF; 
+       			image_data[pixel_index + 1] = (color >> 8) & 0xFF; 
+        			image_data[pixel_index + 2] = color & 0xFF;
+   			}*/
+   		ray->x += 1.0;
+	}
+			
 }
 
 void	draw_walls(void  *mlx, void  *win, void  *img)
 {
-	int premAff = 1;
-	
-	float	w = 1600;
-	float	h = 900;
-	float	posX = 2;
-	float	posY = 2;
-	float	DirX = -1;
-	float	DirY = 0;
-	float	PlaneX = 0;
-	float	PlaneY = 1;
-	
+
 	int carte[5][5];
 	carte[0][0] = 1;
 	carte[0][1] = 1;
@@ -153,10 +205,17 @@ void	draw_walls(void  *mlx, void  *win, void  *img)
 	carte[4][3] = 1;
 	carte[4][4] = 1;
 	
-
+	t_ray *ray = malloc(sizeof(t_ray));
+	init_struct(ray);
+	
+	int bpp;
+	int size_line;
+	int endian;
+	char *image_data = mlx_get_data_addr(&img, &bpp, &size_line, &endian);	
+	ray->addr = (char *)image_data;
 	
 	
-	render(premAff, w, h, posX, posY, DirX, DirY, PlaneX, PlaneY, &img, carte);
+	render(ray, carte, &img);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
 }
 
