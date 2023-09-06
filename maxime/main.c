@@ -41,13 +41,85 @@ void		draw_vert_line(t_ray *ray, int y_start, int y_end)
 {
 	int color;
 
-	color = 0xFF0000;
+	
+	int i = 0;
+	while (i < y_start)
+	{
+		color = 0xFFFF00;
+		mlx_pixel_put(ray->mlx, ray->win, ray->x, i, color);
+		i++;
+	}
 	while (y_start < y_end)
 	{
+		color = 0xFF0000;
 		//printf("%d et %d\n", ray->x, y_start);
 		mlx_pixel_put(ray->mlx, ray->win, ray->x, y_start, color);
 		y_start++;
 	}
+	while (y_end < 900)
+	{
+		color = 0xFFFFFF;
+		mlx_pixel_put(ray->mlx, ray->win, ray->x, y_end, color);
+		y_end++;
+	}
+}
+
+void	ft_calcul1(t_ray *ray)
+{
+	if (rayDirX < 0)
+	{
+		ray->stepX = -1;
+		ray->sideDistX = (ray->rayPosX - ray->mapX) * ray->deltaDistX;
+	}
+	else
+	{
+		ray->stepX = 1;
+		ray->sideDistX = (ray->mapX + 1.0 - ray->rayPosX) * ray->deltaDistX;
+	}
+	if (rayDirY < 0)
+	{
+		ray->stepY = -1;
+		ray->sideDistY = (ray->rayPosY - ray->mapY) * ray->deltaDistY;
+	}
+	else
+	{
+		ray->stepY = 1;
+		ray->sideDistY = (ray->mapY + 1.0 - ray->rayPosY) * ray->deltaDistY;
+	}
+}
+
+
+void	ft_calcul2(t_ray *ray)
+{
+	ray->hit = 0;
+	while (ray->hit == 0)
+	{
+		if (ray->sideDistX < ray->sideDistY)
+		{
+			ray->sideDistX += ray->deltaDistX;
+			ray->mapX += ray->stepX;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->sideDistY += ray->deltaDistY;
+			ray->mapY += ray->stepY;
+			ray->side = 1;
+		}
+		if (carte[ray->mapX][ray->mapY] == 1)
+			ray->hit = 1;
+	}	
+}
+
+void	ft_calcul3(t_ray *ray)
+{
+	if (ray->side == 0)
+		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
+	else
+		ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
+	ray->hauteurLigne = (int)(ray->h / ray->perpWallDist);
+	ray->drawStart = -ray->hauteurLigne / 2 + ray->h / 2;
+	ray->drawEnd = ray->hauteurLigne / 2 + ray->h / 2;
 }
 
 void	render(t_ray *ray, int carte[5][5])
@@ -69,57 +141,10 @@ void	render(t_ray *ray, int carte[5][5])
 		else
 			ray->deltaDistY = fabs(1 / rayDirY);
 		//printf("%f %f\n", rayon.distv2.x, rayon.distv2.y);
-	
-		if (rayDirX < 0)
-		{
-			ray->stepX = -1;
-			ray->sideDistX = (ray->rayPosX - ray->mapX) * ray->deltaDistX;
-		}
-		else
-		{
-			ray->stepX = 1;
-			ray->sideDistX = (ray->mapX + 1.0 - ray->rayPosX) * ray->deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			ray->stepY = -1;
-			ray->sideDistY = (ray->rayPosY - ray->mapY) * ray->deltaDistY;
-		}
-		else
-		{
-			ray->stepY = 1;
-			ray->sideDistY = (ray->mapY + 1.0 - ray->rayPosY) * ray->deltaDistY;
-		}
-		ray->hit = 0;
-		while (ray->hit == 0)
-		{
-			if (ray->sideDistX < ray->sideDistY)
-			{
-				ray->sideDistX += ray->deltaDistX;
-				ray->mapX += ray->stepX;
-				ray->side = 0;
-			}
-			else
-			{
-				ray->sideDistY += ray->deltaDistY;
-				ray->mapY += ray->stepY;
-				ray->side = 1;
-			}
-			if (carte[ray->mapX][ray->mapY] == 1)
-				ray->hit = 1;
-		}	
-		if (ray->side == 0)
-		{
-			ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
-		}
-		else
-		{
-			
-			ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
-		}
-		ray->hauteurLigne = (int)(ray->h / ray->perpWallDist);
-		ray->drawStart = -ray->hauteurLigne / 2 + ray->h / 2;
-		ray->drawEnd = ray->hauteurLigne / 2 + ray->h / 2;
+		ft_calcul1(ray);
+		ft_calcul2(ray);
+		ft_calcul3(ray);
+		
 		//printf("%d et %d\n", ray->drawStart, ray->drawEnd);
 		draw_vert_line(ray, ray->drawStart, ray->drawEnd);
 
@@ -127,6 +152,53 @@ void	render(t_ray *ray, int carte[5][5])
 	}
 			
 }
+
+int	render(t_ray *ray)
+{
+	while (ray->x < ray->w)
+	{
+		ft_calcul1(ray);
+		ft_calcul2(ray);
+		ft_calcul3(ray);
+		x++;
+	}
+	return (0);
+}
+
+void	set_frame_image_pixel(t_ray *ray, t_img *image, int x, int y)
+{
+	if (ray->texture_pixels[y][x] > 0)
+		set_image_pixel(image, x, y, ray->texture_pixels[y][x]);
+	else if (y < ray->h / 2)
+		set_image_pixel(image, x, y, ray->texinfo.hex_ceiling);
+	else if (y < ray->h -1)
+		set_image_pixel(image, x, y, ray->texinfo.hex_floor);
+}
+
+void	render_frame(t_ray *ray)
+{
+	t_img	image;
+	int		x;
+	int		y;
+
+	image.img = NULL;
+	init_img(ray, &image, ray->w, ray->h);
+	y = 0;
+	while (y < ray->h)
+	{
+		x = 0;
+		while (x < ray->w)
+		{
+			set_frame_image_pixel(ray, &image, x, y);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(ray->mlx, ray->win, image.img, 0, 0);
+	mlx_destroy_image(ray->mlx, image.img);
+}
+
+
 
 void	draw_walls(t_ray *ray)
 {
@@ -163,39 +235,51 @@ void	draw_walls(t_ray *ray)
 	carte[4][4] = 1;
 	
 	
-
-	
-	
 	render(ray, carte);
+	render_frame(ray);
 }
 
 
 int	ft_controls(int touche, t_ray *ray)
 {
-	if (touche == 119 || touche == 65632)
+	if (touche == 65361)
 	{
 		ray->posX += 0.2;
 		ray->x = 0;
 		draw_walls(ray);
 		printf("%f %f\n", ray->posX, ray->posY);
 	}
-	if (touche == 97 || touche == 65364)
+	if (touche == 97)
 	{
 		ray->posY -= 0.2;
 		ray->x = 0;
 		draw_walls(ray);
 		printf("%f %f\n", ray->posX, ray->posY);
 	}
-	if (touche == 115 || touche == 65361)
+	if (touche == 65363)
 	{
-		ray->posX -= 0.2;
+		ray->posX -= 0.1;
 		ray->x = 0;
 		draw_walls(ray);
 		printf("%f %f\n", ray->posX, ray->posY);
 	}
-	if (touche == 100 || touche == 65363)
+	if (touche == 100)
 	{
-		ray->posY += 0.2;
+		ray->posY += 0.1;
+		ray->x = 0;
+		draw_walls(ray);
+		printf("%f %f\n", ray->posX, ray->posY);
+	}
+	if (touche == 119)
+	{
+		ray->DirX += 0.1;
+		ray->x = 0;
+		draw_walls(ray);
+		printf("%f %f\n", ray->posX, ray->posY);
+	}
+	if (touche == 115)
+	{
+		ray->DirX -= 0.1;
 		ray->x = 0;
 		draw_walls(ray);
 		printf("%f %f\n", ray->posX, ray->posY);

@@ -85,6 +85,24 @@ typedef struct		s_texture
 	double			texpos;
 }					t_texture;
 
+typedef struct s_texinfo
+{
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	int				*floor;
+	int				*ceiling;
+	unsigned long	hex_floor;
+	unsigned long	hex_ceiling;
+	int				size;
+	int				index;
+	double			step;
+	double			pos;
+	int				x;
+	int				y;
+}	t_texinfo;
+
 typedef struct s_ray
 {
 	void	*mlx;
@@ -124,19 +142,22 @@ typedef struct s_ray
 	
 	char	*addr;
 	int	line_length;
+	
+	int			**texture_pixels;
+	int			**textures;
+	t_texinfo	texinfo;
+	
+	
 }		t_ray;
 
-typedef struct s_v2
+typedef struct s_imga
 {
-	float	x;
-	float	y;
-}	t_v2;
-
-typedef struct s_rayon
-{
-	t_v2	posv2;
-	t_v2	distv2;
-}	t_rayon;
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+}	t_imga;
 
 /* ==================== function parcing ==================== */
 
