@@ -87,6 +87,9 @@ typedef struct		s_texture
 
 typedef struct s_ray
 {
+	void	*mlx;
+	void	*win;
+
 	double	w;
 	double	h;
 	double	posX;
@@ -122,6 +125,18 @@ typedef struct s_ray
 	char	*addr;
 	int	line_length;
 }		t_ray;
+
+typedef struct s_v2
+{
+	float	x;
+	float	y;
+}	t_v2;
+
+typedef struct s_rayon
+{
+	t_v2	posv2;
+	t_v2	distv2;
+}	t_rayon;
 
 /* ==================== function parcing ==================== */
 
