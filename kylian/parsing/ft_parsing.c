@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parcing.c                                       :+:      :+:    :+:   */
+/*   ft_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 14:45:09 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 19:14:58 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/09/06 19:32:15 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/09/06 19:32:17 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,22 @@ int	ft_check_cub_extension(char *argv)
 	return (0);
 }
 
-t_info	*ft_parcing(int argc, char **argv)
+int	ft_parsing(int argc, char **argv, t_info *info)
 {
-	int		fd;
-	t_info	*info;
+	int	fd;
 
 	if (argc != 2)
-		return (print_error_message_null(ERRCODE_NB_ARG));
+		return (print_error_message(ERRCODE_NB_ARG));
 	if (ft_check_cub_extension(argv[1]) == 1)
-		return (print_error_message_null(ERRCODE_CUB));
-	info = malloc(sizeof(t_info));
-	if (!info)
-		return (print_error_message_null(ERRCODE_MALLOC));
+		return (print_error_message(ERRCODE_CUB));
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-	{
-		free(info);
-		return (print_error_message_null(ERRCODE_OPEN));
-	}
+		return (print_error_message(ERRCODE_OPEN));
 	if (ft_init_map_and_arg(fd, info) == 1)
 	{
-		free(info);
-		info = NULL;
+		close(fd);
+		return (1);
 	}
 	close(fd);
-	return (info);
+	return (0);
 }

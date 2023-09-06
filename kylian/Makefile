@@ -8,8 +8,15 @@ SRCS	=	main.c	\
 			utils/get_next_line.c \
 			utils/get_next_line_utils.c \
 			utils/ft_strjoin_free.c \
-			parcing/ft_parcing.c \
-			parcing/ft_init_map_and_arg.c \
+			utils/ft_atoi.c \
+			utils/ft_count_number.c \
+			utils/ft_count_nb_char.c \
+			parsing/ft_parsing.c \
+			parsing/ft_init_map_and_arg.c \
+			parsing/ft_fill_arg.c \
+			parsing/ft_charg_color_img.c \
+			parsing/ft_charg_map.c \
+			ft_free.c \
 
 OBJ =	${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:05:50 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 19:17:16 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/06 12:44:11 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ int	print_error_message(int error_code)
 		ft_print_error(ERRMSG_READ);
 	else if (error_code == ERRCODE_MAP_VOID)
 		ft_print_error(ERRMSG_MAP_VOID);
+	else if (error_code == ERRCODE_XPM_FILE)
+		ft_print_error(ERRMSG_XPM_FILE);
+	else if (error_code == ERRCODE_NB_MAX_COLOR)
+		ft_print_error(ERRMSG_NB_MAX_COLOR);
+	else if (error_code == ERRCODE_NB_NEG_COLOR)
+		ft_print_error(ERRMSG_NB_NEG_COLOR);
+	else if (error_code == ERRCODE_COLOR_NO)
+		ft_print_error(ERRMSG_COLOR_NO);
 	return (1);
 }
 
@@ -42,4 +50,10 @@ void	*print_error_message_null(int error_code)
 {
 	print_error_message(error_code);
 	return (NULL);
+}
+
+int	print_error_message_val(int error_code, int code)
+{
+	print_error_message(error_code);
+	return (code);
 }

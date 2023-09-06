@@ -6,27 +6,28 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:14:44 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 20:01:21 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/06 20:23:26 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int ft_init_arg(t_info *info, char *dest)
+void	ft_init_value(t_info *info)
 {
-	int i;
-
-	i = 0;
-	while (dest[i])
-	{
-		i++;
-	}
+	info->no.img = NULL;
+	info->so.img = NULL;
+	info->we.img = NULL;
+	info->ea.img = NULL;
+	info->ceiling.b = -1;
+	info->ground.b = -1;
+	info->map = NULL;
 }
 
-int ft_fill_map_and_arg(t_info *info, char *dest)
+int	ft_fill_map_and_arg(t_info *info, char *dest)
 {
-	int i;
+	int	i;
 
+	ft_init_value(info);
 	if (dest && dest[0] == '\0')
 	{
 		free(dest);
@@ -36,14 +37,24 @@ int ft_fill_map_and_arg(t_info *info, char *dest)
 		return (print_error_message(ERRCODE_MAP_VOID));
 	i = ft_init_arg(info, dest);
 	if (i == -1)
-		return (-1);
+	{
+		free(dest);
+		return (ft_free_img(info));
+	}
+	if (ft_charg_map(info, dest, i) == 1)
+	{
+		free(dest);
+		ft_free_map(info);
+		return (ft_free_img(info));
+	}
+	return (0);
 }
 
-int ft_init_map_and_arg(int fd, t_info *info)
+int	ft_init_map_and_arg(int fd, t_info *info)
 {
-	int rd;
-	char buff[BUFFER_SIZE + 1];
-	char *dest;
+	int		rd;
+	char	buff[BUFFER_SIZE + 1];
+	char	*dest;
 
 	rd = 1;
 	dest = NULL;
