@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 18:59:25 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 18:59:27 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 10:48:17 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int ft_free_img(t_info *info)
 {
-	if (info->no.img)
+	if (info->no.img != NULL)
 		mlx_destroy_image(info->mlx, info->no.img);
-	if (info->so.img)
+	if (info->so.img != NULL)
 		mlx_destroy_image(info->mlx, info->so.img);
-	if (info->we.img)
+	if (info->we.img != NULL)
 		mlx_destroy_image(info->mlx, info->we.img);
-	if (info->ea.img)
+	if (info->ea.img != NULL)
 		mlx_destroy_image(info->mlx, info->ea.img);
 	return (1);
 }
@@ -32,7 +32,7 @@ int ft_free_map(t_info *info)
 	i = -1;
 	if (!info->map)
 		return (1);
-	while (!info->map[++i])
+	while (info->map[++i])
 		free(info->map[i]);
 	free(info->map);
 	return (1);

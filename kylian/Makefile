@@ -11,6 +11,8 @@ SRCS	=	main.c	\
 			utils/ft_atoi.c \
 			utils/ft_count_number.c \
 			utils/ft_count_nb_char.c \
+			utils/ft_strcpy_tab.c \
+			utils/ft_strdup.c \
 			parsing/ft_parsing.c \
 			parsing/ft_init_map_and_arg.c \
 			parsing/ft_fill_arg.c \

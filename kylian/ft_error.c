@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:05:50 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 12:44:11 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 13:43:07 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ void	ft_print_error(char *src)
 	i = -1;
 	while (src[++i])
 		write(2, &src[i], 1);
+}
+
+int print_error_message2(int error_code)
+{
+	if (error_code == ERRCODE_PLAYEUR_MAP)
+		ft_print_error(ERRMSG_PLAYEUR_MAP);
+	else if (error_code == ERRCODE_INVALID_MAP)
+		ft_print_error(ERRMSG_INVALID_MAP);
+	return (1);
 }
 
 int	print_error_message(int error_code)
@@ -43,6 +52,10 @@ int	print_error_message(int error_code)
 		ft_print_error(ERRMSG_NB_NEG_COLOR);
 	else if (error_code == ERRCODE_COLOR_NO)
 		ft_print_error(ERRMSG_COLOR_NO);
+	else if (error_code == ERRCODE_LINE)
+		ft_print_error(ERRMSG_LINE);
+	else
+		return (print_error_message2(error_code));
 	return (1);
 }
 

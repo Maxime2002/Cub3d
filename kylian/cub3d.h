@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 20:22:45 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 13:42:31 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,23 @@
 # define ERRCODE_READ 5
 # define ERRMSG_READ "Error\nReading the file didn't work.\n"
 # define ERRCODE_MAP_VOID 6
-# define ERRMSG_MAP_VOID "Error\nThe map is missing in the file\n"
+# define ERRMSG_MAP_VOID "Error\nThe map is missing in the file.\n"
 # define ERRCODE_XPM_FILE 7
-# define ERRMSG_XPM_FILE "Error\nImage loading to fail\n"
+# define ERRMSG_XPM_FILE "Error\nImage loading to fail.\n"
 # define ERRCODE_NB_MAX_COLOR 8
-# define ERRMSG_NB_MAX_COLOR "Error\nThe color is greater than 255\n"
+# define ERRMSG_NB_MAX_COLOR "Error\nThe color is greater than 255.\n"
 # define ERRCODE_NB_NEG_COLOR 9
-# define ERRMSG_NB_NEG_COLOR "Error\nThe color must not be negative\n"
+# define ERRMSG_NB_NEG_COLOR "Error\nThe color must not be negative.\n"
 # define ERRCODE_COLOR_NO 10
-# define ERRMSG_COLOR_NO "Error\nIncorrect color\n"
+# define ERRMSG_COLOR_NO "Error\nIncorrect color.\n"
 # define ERRCODE_LINE 11
-# define ERRMSG_LINE "Error\nIncorrect line\n"
+# define ERRMSG_LINE "Error\nThe lines before the map are not good.\n"
+# define ERRCODE_CHAR_MAP 12
+# define ERRMSG_CHAR_MAP "Error\nAn unauthorized character is in the map.\n"
+# define ERRCODE_PLAYEUR_MAP 13
+# define ERRMSG_PLAYEUR_MAP "Error\nNot the right number of starting points.\n"
+# define ERRCODE_INVALID_MAP 14
+# define ERRMSG_INVALID_MAP "Error\nThe map is invalid.\n"
 
 /* ==================== include ==================== */
 
@@ -111,6 +117,8 @@ int			ft_strlen_char(char *src, char c);
 char		*ft_strjoin_free_1(char *s1, char *s2);
 int			ft_atoi(const char *nptr);
 int			ft_count_nb_char(char *dest, char c);
+char		**ft_strcpy_tab(char **src);
+char		*ft_strdup(char *src);
 
 /* ========= gnl function ========= */
 

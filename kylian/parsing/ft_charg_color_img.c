@@ -6,11 +6,27 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:44:37 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 20:24:06 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 12:44:25 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+int ft_verif_color_number(char *line)
+{
+	int i;
+
+	i = 0;
+	if (line[i] == '-')
+		return (print_error_message(ERRCODE_NB_NEG_COLOR));
+	while (line[i] && line[i] >= '0' && line[i] <= '9')
+		i++;
+	if (line[i] && line[i] != ' ' && line[i] != ',')
+		return (print_error_message(ERRCODE_COLOR_NO));
+	if (ft_count_number(line) > 3)
+		return (print_error_message(ERRCODE_NB_MAX_COLOR));
+	return (0);
+}
 
 int	ft_verif_size_color(char *line, int i)
 {
@@ -21,27 +37,21 @@ int	ft_verif_size_color(char *line, int i)
 		free(line);
 		return (print_error_message_val(ERRCODE_COLOR_NO, -1));
 	}
-	if (line[i] == '-')
+	if (ft_verif_color_number(line + i) == 1)
 	{
 		free(line);
-		return (print_error_message_val(ERRCODE_NB_NEG_COLOR, -1));
-	}
-	if (ft_count_number(line + i) > 3)
-	{
-		free(line);
-		return (print_error_message_val(ERRCODE_NB_MAX_COLOR, -1));
+		return (-1);
 	}
 	color = ft_atoi(line + i);
 	if (color > 255)
-	{
-		free(line);
 		return (print_error_message_val(ERRCODE_NB_MAX_COLOR, -1));
-	}
 	return (color);
 }
 
 int	ft_skip_space_comma_space(char *line, int i)
 {
+	while(line[i] >= '0' && line[i] <= '9')
+		i++;
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == ',')

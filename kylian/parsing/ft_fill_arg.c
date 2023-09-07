@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:19:55 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 20:23:34 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 11:13:31 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	ft_fill_arg(char *line, t_info *info)
 		return (ft_charg_color(&info->ground, line));
 	else if (line[0] == 'C' && line[1] == ' ')
 		return (ft_charg_color(&info->ceiling, line));
-	if (!info->no.img || info->so.img || info->we.img || !info->ea.img
+	free(line);
+	if (!info->no.img || !info->so.img || !info->we.img || !info->ea.img
 		|| info->ceiling.b == -1 || info->ground.b == -1)
-		return (print_error_message(ERRCODE_LINE));
+			return (print_error_message(ERRCODE_LINE));
 	return (-1);
 }
 
@@ -81,7 +82,9 @@ int	ft_init_arg(t_info *info, char *dest)
 			break ;
 		i++;
 	}
+	while (i > 0 && --i >= 0 && dest[i] != '\n')
+		;
 	if (!dest[i])
-		return (print_error_message(ERRCODE_MAP_VOID));
+		return (print_error_message_val(ERRCODE_MAP_VOID, -1));
 	return (i);
 }
