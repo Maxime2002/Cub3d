@@ -6,15 +6,15 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:44:37 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 12:44:25 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:13 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int ft_verif_color_number(char *line)
+int	ft_verif_color_number(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (line[i] == '-')
@@ -50,7 +50,7 @@ int	ft_verif_size_color(char *line, int i)
 
 int	ft_skip_space_comma_space(char *line, int i)
 {
-	while(line[i] >= '0' && line[i] <= '9')
+	while (line[i] >= '0' && line[i] <= '9')
 		i++;
 	while (line[i] == ' ')
 		i++;

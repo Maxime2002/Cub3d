@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:14:44 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 10:47:52 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:04:47 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_fill_map_and_arg(t_info *info, char *dest)
 	if (ft_charg_map(info, dest, i) == 1)
 	{
 		free(dest);
-		ft_free_map(info);
+		ft_free_map(info->map);
 		return (ft_free_img(info));
 	}
 	free(dest);

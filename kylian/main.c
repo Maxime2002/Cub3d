@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:59:33 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 13:46:18 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:58 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main (int argc, char **argv)
 	printf("ground --------\nr: %d\ng: %d\nb: %d\n\n", info->ground.r, info->ground.g, info->ground.b);
 	printf("celing --------\nr: %d\ng: %d\nb: %d\n\n", info->ceiling.r, info->ceiling.g ,info->ceiling.b);
 	*/
-	ft_free_map(info);
+	ft_free_map(info->map);
 	mlx_destroy_display(info->mlx);
 	free(info->mlx);
 	free(info);

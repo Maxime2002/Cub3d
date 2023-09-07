@@ -18,6 +18,7 @@ SRCS	=	main.c	\
 			parsing/ft_fill_arg.c \
 			parsing/ft_charg_color_img.c \
 			parsing/ft_charg_map.c \
+			parsing/ft_feasibility_check.c \
 			ft_free.c \
 
 OBJ =	${SRCS:.c=.o}

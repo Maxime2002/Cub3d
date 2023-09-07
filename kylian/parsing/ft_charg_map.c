@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:31:24 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 13:45:58 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 14:54:42 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,6 @@ char	*ft_strdup_char(char *src, char c)
 		dest[i] = '\0';
 	}
 	return (dest);
-}
-/*
-int ft_feasibility_check2(char **src)
-{
-	
-}*/
-
-int	ft_feasibility_check(t_info *info)
-{
-	return (0);
-	int		i;
-	int		j;
-	char	**temp;
-
-	i = 0;
-	while (info->map[i])
-	{
-		j = -1;
-		while (info->map[i][++j])
-			if (info->map[i][j] == 'N' || info->map[i][j] == 'S'
-				|| info->map[i][j] == 'E' || info->map[i][j] == 'W')
-				break ;
-		i++;
-	}
-	if (i == 0 || j == 0 || info->map[i] == NULL || info->map[i + 1] == NULL
-		|| info->map[i][j + 1] == '\0')
-		return (print_error_message(ERRCODE_INVALID_MAP));
-	temp = ft_strcpy_tab(info->map);
-	if (!temp)
-		return (print_error_message(ERRCODE_MALLOC));
-	temp[i][j] = '9';
-	//return (ft_feasibility_check2(temp));
 }
 
 int	ft_verif_map(t_info *info)

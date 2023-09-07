@@ -6,16 +6,16 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:25:40 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 18:43:11 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:32 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int ft_count_number(char *src)
+int	ft_count_number(char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

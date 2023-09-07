@@ -6,27 +6,26 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:22:02 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 13:27:39 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:34 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-char **ft_strcpy_tab(char **src)
+char	**ft_strcpy_tab(char **src)
 {
-	int i;
-	char **dest;
+	int		i;
+	char	**dest;
 
 	i = 0;
 	while (src[i])
 		i++;
-	dest = malloc(sizeof(char *) * i);
+	dest = malloc(sizeof(char *) * (i + 1));
 	if (!dest)
 		return (NULL);
 	i = 0;
 	while (src[i])
 	{
-		i++;
 		dest[i] = ft_strdup(src[i]);
 		if (!dest[i])
 		{
@@ -35,6 +34,8 @@ char **ft_strcpy_tab(char **src)
 			free(dest);
 			return (NULL);
 		}
+		i++;
 	}
-	return(dest);
+	dest[i] = NULL;
+	return (dest);
 }

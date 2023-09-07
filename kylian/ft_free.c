@@ -6,13 +6,13 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 18:59:25 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 10:48:17 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:54 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_free_img(t_info *info)
+int	ft_free_img(t_info *info)
 {
 	if (info->no.img != NULL)
 		mlx_destroy_image(info->mlx, info->no.img);
@@ -25,15 +25,15 @@ int ft_free_img(t_info *info)
 	return (1);
 }
 
-int ft_free_map(t_info *info)
+int	ft_free_map(char **map)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	if (!info->map)
+	if (!map)
 		return (1);
-	while (info->map[++i])
-		free(info->map[i]);
-	free(info->map);
+	while (map[++i])
+		free(map[i]);
+	free(map);
 	return (1);
 }

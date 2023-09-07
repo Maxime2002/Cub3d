@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 13:42:31 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/07 14:55:42 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int			ft_charg_color(t_color *color, char *line);
 int			ft_charg_img(t_img *img, char *line, t_info *info);
 int			ft_count_number(char *src);
 int			ft_charg_map(t_info *info, char *dest, int i);
+int			ft_feasibility_check(t_info *info);
 
 /* ==================== function error ==================== */
 
@@ -130,6 +131,6 @@ int			ft_chr(char *s);
 /* ==================== function free ==================== */
 
 int			ft_free_img(t_info *info);
-int			ft_free_map(t_info *info);
+int			ft_free_map(char **map);
 
 #endif
