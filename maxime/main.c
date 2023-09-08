@@ -57,8 +57,6 @@ void	verLine(int x, int drawStart, int drawEnd, int color, void *mlx, void *win)
 
 void	ft_render(t_aff *aff)
 {
-	aff->dirX = normalizeX(cos(aff->orientation), sin(aff->orientation));
-	aff->dirY = normalizeY(cos(aff->orientation), sin(aff->orientation));
 	for (int x = 0; x < (double)aff->w; x++)
 	{
 		aff->cameraX = 2.0f * (double)x / (double)aff->w - 1.0f;
@@ -150,14 +148,24 @@ int	ft_controls(int touche, t_aff *aff)
 {
 	if (touche == 65361)
 	{
-		aff->orientation -= 0.05;
+		double oldDirX = aff->dirX;
+	      	aff->dirX = aff->dirX * cos(-(0.033 * 1.8) / 2) - aff->dirY * sin(-(0.033 * 1.8) / 2);
+	      	aff->dirY = oldDirX * sin(-(0.033 * 1.8) / 2) + aff->dirY * cos(-(0.033 * 1.8) / 2);
+		double oldPlaneX = aff->planX;
+		aff->planX = aff->planX * cos(-(0.033 * 1.8) / 2) - aff->planY * sin(-(0.033 * 1.8) / 2);
+		aff->planY = oldPlaneX * sin(-(0.033 * 1.8) / 2) + aff->planY * cos(-(0.033 * 1.8) / 2);
 		
 		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	
 	if (touche == 65363)
 	{
-		aff->orientation += 0.05;
+		double oldDirX = aff->dirX;
+	      	aff->dirX = aff->dirX * cos((0.033 * 1.8) / 2) - aff->dirY * sin((0.033 * 1.8) / 2);
+	      	aff->dirY = oldDirX * sin((0.033 * 1.8) / 2) + aff->dirY * cos((0.033 * 1.8) / 2);
+		double oldPlaneX = aff->planX;
+		aff->planX = aff->planX * cos((0.033 * 1.8) / 2) - aff->planY * sin((0.033 * 1.8) / 2);
+		aff->planY = oldPlaneX * sin((0.033 * 1.8) / 2) + aff->planY * cos((0.033 * 1.8) / 2);
 		
 		printf("%f %f\n", aff->posX, aff->posY);
 	}
@@ -175,9 +183,12 @@ int	ft_controls(int touche, t_aff *aff)
 	}
 	if (touche == 119)
 	{
-		aff->posX += 0.2;
+		if (aff->worldMap[(int)aff->posX + (int)aff->dirX * (int)0.1][(int)aff->posY] == 0)
+			aff->posX += aff->dirX * 0.1;
+		if (aff->worldMap[(int)aff->posX][(int)aff->posY + (int)aff->dirY * (int)0.1] == 0)
+			aff->posX += aff->dirX * 0.1;
 		//ft_render(aff);
-		printf("%f %f\n", aff->posX, aff->posY);
+		printf("test %f %f\n", aff->posX, aff->posY);
 	}
 	if (touche == 115)
 	{
@@ -185,10 +196,6 @@ int	ft_controls(int touche, t_aff *aff)
 		//ft_render(aff);
 		printf("%f %f\n", aff->posX, aff->posY);
 	}
-	if (aff->orientation > 2*3.141592658)
-		aff->orientation -= 2*3.141592658;
-	else if (aff->orientation < 0)
-	 	aff->orientation += 2*3.141592658;
 	ft_render(aff);
 	return (0);
 }
@@ -212,7 +219,7 @@ int main (int ac, char **av)
 	  {1,0,0,0,0,0,0,1},
 	  {1,0,0,0,0,0,0,1},
 	  {1,0,0,0,0,0,0,1},
-	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,2,2,2,2,1},
 	  {1,0,0,0,0,0,0,1},
 	  {1,1,2,3,4,1,1,1}
 	};
@@ -224,8 +231,9 @@ int main (int ac, char **av)
 	aff->orientation = 0;
 	aff->planX = 0;
 	aff->planY = 1;
+	aff->dirX = 1;
+	aff->dirY = 0;
 	
-
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 640, 480, "cub3d");
 	mlx_key_hook(win, ft_controls, aff);
@@ -233,6 +241,8 @@ int main (int ac, char **av)
 	aff->win = win;
 	aff->w = 640;
 	aff->h = 480;
+	
+	
 	
 	
 	ft_render(aff);
