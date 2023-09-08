@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 14:06:54 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 11:33:15 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/09/05 18:58:13 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/09/05 19:03:30 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_strlen(char *src)
+char	*ft_strjoin_free_1(char *s1, char *s2)
 {
-	int	i;
+	char	*dest;
+	int		i;
+	int		j;
 
-	i = 0;
-	while (src && src[i])
-		i++;
-	return (i);
-}
-
-int	ft_strlen_char(char *src, char c)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && src[i] != c)
-		i++;
-	return (i);
+	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (dest)
+	{
+		i = 0;
+		while (s1 && s1[i])
+		{
+			dest[i] = s1[i];
+			i++;
+		}
+		j = -1;
+		while (s2[++j])
+			dest[i + j] = s2[j];
+		dest[i + j] = '\0';
+	}
+	if (s1)
+		free(s1);
+	return (dest);
 }

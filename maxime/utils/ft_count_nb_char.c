@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_count_nb_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 14:06:54 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 11:33:15 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/09/06 18:51:09 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/09/06 18:52:32 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_strlen(char *src)
+int	ft_count_nb_char(char *dest, char c)
 {
 	int	i;
+	int	count;
 
 	i = 0;
-	while (src && src[i])
+	count = 0;
+	while (dest[i])
+	{
+		if (dest[i] == c)
+			count++;
 		i++;
-	return (i);
-}
-
-int	ft_strlen_char(char *src, char c)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && src[i] != c)
-		i++;
-	return (i);
+	}
+	return (count);
 }

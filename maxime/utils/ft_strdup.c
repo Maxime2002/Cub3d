@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 14:06:54 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/06 11:33:15 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/09/07 13:25:26 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/09/07 15:23:36 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_strlen(char *src)
+char	*ft_strdup(char *src)
 {
-	int	i;
+	int		i;
+	char	*dest;
 
 	i = 0;
-	while (src && src[i])
+	dest = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!dest)
+		return (NULL);
+	while (src[i])
+	{
+		dest[i] = src[i];
 		i++;
-	return (i);
-}
-
-int	ft_strlen_char(char *src, char c)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && src[i] != c)
-		i++;
-	return (i);
+	}
+	dest[i] = '\0';
+	return (dest);
 }

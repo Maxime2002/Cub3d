@@ -21,6 +21,7 @@
 
 /* ==================== error ==================== */
 
+# define ERRCODE_ERR 0
 # define ERRCODE_MALLOC 1
 # define ERRMSG_MALLOC "Error\nMalloc failed to allocate memory.\n"
 # define ERRCODE_NB_ARG 2
@@ -32,7 +33,23 @@
 # define ERRCODE_READ 5
 # define ERRMSG_READ "Error\nReading the file didn't work.\n"
 # define ERRCODE_MAP_VOID 6
-# define ERRMSG_MAP_VOID "Error\nthe map is empty\n"
+# define ERRMSG_MAP_VOID "Error\nThe map is missing in the file.\n"
+# define ERRCODE_XPM_FILE 7
+# define ERRMSG_XPM_FILE "Error\nImage loading to fail.\n"
+# define ERRCODE_NB_MAX_COLOR 8
+# define ERRMSG_NB_MAX_COLOR "Error\nThe color is greater than 255.\n"
+# define ERRCODE_NB_NEG_COLOR 9
+# define ERRMSG_NB_NEG_COLOR "Error\nThe color must not be negative.\n"
+# define ERRCODE_COLOR_NO 10
+# define ERRMSG_COLOR_NO "Error\nIncorrect color.\n"
+# define ERRCODE_LINE 11
+# define ERRMSG_LINE "Error\nThe lines before the map are not good.\n"
+# define ERRCODE_CHAR_MAP 12
+# define ERRMSG_CHAR_MAP "Error\nAn unauthorized character is in the map.\n"
+# define ERRCODE_PLAYEUR_MAP 13
+# define ERRMSG_PLAYEUR_MAP "Error\nNot the right number of starting points.\n"
+# define ERRCODE_INVALID_MAP 14
+# define ERRMSG_INVALID_MAP "Error\nThe map is invalid.\n"
 
 /* ==================== include ==================== */
 
@@ -64,6 +81,8 @@ typedef struct s_img
 
 typedef struct s_info
 {
+	void	*mlx;
+	void	*win;
 	char	**map;
 	t_img	no;
 	t_img	so;
@@ -106,22 +125,35 @@ typedef struct s_aff
 	int drawStart;
 	int drawEnd;
 	double orientation;
+	t_info	*info;
 }	t_aff;
 
-/* ==================== function parcing ==================== */
+/* ==================== function parsing ==================== */
 
-t_info		*ft_parcing(int argc, char **argv);
+int			ft_parsing(int argc, char **argv, t_info *info);
 int			ft_init_map_and_arg(int fd, t_info *info);
+int			ft_init_arg(t_info *info, char *dest);
+int			ft_charg_color(t_color *color, char *line);
+int			ft_charg_img(t_img *img, char *line, t_info *info);
+int			ft_count_number(char *src);
+int			ft_charg_map(t_info *info, char *dest, int i);
+int			ft_feasibility_check(t_info *info);
 
 /* ==================== function error ==================== */
 
 int			print_error_message(int error_code);
 void		*print_error_message_null(int error_code);
+int			print_error_message_val(int error_code, int code);
 
 /* ==================== function utils ==================== */
 
 int			ft_strlen(char *src);
+int			ft_strlen_char(char *src, char c);
 char		*ft_strjoin_free_1(char *s1, char *s2);
+int			ft_atoi(const char *nptr);
+int			ft_count_nb_char(char *dest, char c);
+char		**ft_strcpy_tab(char **src);
+char		*ft_strdup(char *src);
 
 /* ========= gnl function ========= */
 
@@ -129,5 +161,10 @@ char		*get_next_line(int fd);
 char		*ft_join_modif(char *s1, char *s2);
 void		ft_buf_cut(char *dest);
 int			ft_chr(char *s);
+
+/* ==================== function free ==================== */
+
+int			ft_free_img(t_info *info);
+int			ft_free_map(char **map);
 
 #endif

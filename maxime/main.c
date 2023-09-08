@@ -14,20 +14,6 @@
 #include<math.h>
 #include<string.h>
 
-float	normalizeX(float x, float y)
-{
-	float length;
-	length = sqrt(x *x +y * y);
-	return (x / length);
-}
-
-float	normalizeY(float x, float y)
-{
-	float length;
-	length = sqrt(x *x +y * y);
-	return (y / length);
-}
-
 float	absolute(float a)
 {
 	if (a < 0)
@@ -109,7 +95,8 @@ void	ft_render(t_aff *aff)
 				aff->mapY += aff->stepY;
 				aff->side = 1;
 			}
-			if (aff->worldMap[aff->mapX][aff->mapY] > 0)
+			printf("test ; %d\n", aff->info->map[aff->mapX][aff->mapY]);
+			if (aff->info->map[aff->mapX][aff->mapY] != '0')
 				aff->hit = 1;
 		} 
 		if (aff->side == 0)
@@ -127,14 +114,7 @@ void	ft_render(t_aff *aff)
 			aff->drawEnd = (double)aff->h - 1;
 			
 		int color;
-		switch(aff->worldMap[aff->mapX][aff->mapY])
-		{
-			case 1:  color = 0xFF0000;  break;
-			case 2:  color = 0x43ff00;  break;
-			case 3:  color = 0x001dff;   break;
-			case 4:  color = 0xFFFF00;  break;
-			default: color = 0xffe900; break;
-		}
+		color = 0xFFFFFF;
 
 		     
 
@@ -200,31 +180,32 @@ int	ft_controls(int touche, t_aff *aff)
 	return (0);
 }
 
-int main (int ac, char **av)
+int main (int argc, char **argv)
 {
-	(void)ac;
-	(void)av;
-	void	*mlx;
-	void	*win;
+	t_info*info;
+
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (print_error_message(ERRCODE_MALLOC));
+	info->mlx = mlx_init();
+	//erreur mlx non gerer encore
+	if (ft_parsing(argc, argv, info) == 1)
+	{
+		mlx_destroy_display(info->mlx);
+		free(info->mlx);
+		free(info);
+		return (1);
+	}
+	ft_free_img(info);
 	
+	
+	void	*win;
 	
 	t_aff	*aff;
 	aff = malloc(sizeof(t_aff));
 	
 	
-	int worldMap[8][8]=
-	{
-	  {1,1,1,1,1,1,1,1},
-	  {1,0,0,0,0,0,0,1},
-	  {1,0,0,0,0,0,0,1},
-	  {1,0,0,0,0,0,0,1},
-	  {1,0,0,0,0,0,0,1},
-	  {1,0,0,2,2,2,2,1},
-	  {1,0,0,0,0,0,0,1},
-	  {1,1,2,3,4,1,1,1}
-	};
 	
-	memcpy(aff->worldMap, worldMap, 8 * 8 * sizeof(int));
 	
 	aff->posX = 3.5;
 	aff->posY = 3.5;
@@ -234,19 +215,19 @@ int main (int ac, char **av)
 	aff->dirX = 1;
 	aff->dirY = 0;
 	
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 640, 480, "cub3d");
+
+	win = mlx_new_window(info->mlx, 640, 480, "cub3d");
 	mlx_key_hook(win, ft_controls, aff);
-	aff->mlx = mlx;
+	aff->mlx = info->mlx;
 	aff->win = win;
 	aff->w = 640;
 	aff->h = 480;
-	
+	aff->info = info;
 	
 	
 	
 	ft_render(aff);
 	
-	mlx_loop(mlx);
+	mlx_loop(info->mlx);
 	return (0);
 }
