@@ -11,282 +11,187 @@
 /* ************************************************************************** */
 
 #include"cub3d.h"
-# include <math.h>
+#include<math.h>
+#include<string.h>
 
-
-void	init_struct(t_ray *ray)
+float	normalizeX(float x, float y)
 {
-	ray->w = 1600;
-	ray->h = 900;
-	ray->posX = 2;
-	ray->posY = 2;
-	ray->DirX = 1;
-	ray->DirY = 0;
-	ray->PlaneX = 0;
-	ray->PlaneY = 0.66;
-	
-	ray->x = 0;
-	ray->rayPosX = ray->posX;
-	ray->rayPosY = ray->posY;
-			
-	ray->mapX = (int)ray->rayPosX;
-	ray->mapY = (int)ray->rayPosY;
-	ray->hit = 0;
-	
-	ray->line_length = 900;
+	float length;
+	length = sqrt(x *x +y * y);
+	return (x / length);
 }
 
-
-void		draw_vert_line(t_ray *ray, int y_start, int y_end)
+float	normalizeY(float x, float y)
 {
-	int color;
+	float length;
+	length = sqrt(x *x +y * y);
+	return (y / length);
+}
 
-	
+float	absolute(float a)
+{
+	if (a < 0)
+		a *= -1;
+	return (a);
+}
+
+void	verLine(int x, int drawStart, int drawEnd, int color, void *mlx, void *win)
+{
 	int i = 0;
-	while (i < y_start)
+	while (i < drawStart)
 	{
-		color = 0xFFFF00;
-		mlx_pixel_put(ray->mlx, ray->win, ray->x, i, color);
+		mlx_pixel_put(mlx, win, x, i, 0x00000);
 		i++;
 	}
-	while (y_start < y_end)
+	while (drawStart < drawEnd)
 	{
-		color = 0xFF0000;
-		//printf("%d et %d\n", ray->x, y_start);
-		mlx_pixel_put(ray->mlx, ray->win, ray->x, y_start, color);
-		y_start++;
+		mlx_pixel_put(mlx, win, x, drawStart, color);
+		drawStart++;
 	}
-	while (y_end < 900)
+	while (drawEnd < 640)
 	{
-		color = 0xFFFFFF;
-		mlx_pixel_put(ray->mlx, ray->win, ray->x, y_end, color);
-		y_end++;
+		mlx_pixel_put(mlx, win, x, drawEnd, 0x000000);
+		drawEnd++;
 	}
 }
 
-void	ft_calcul1(t_ray *ray)
+void	ft_render(t_aff *aff)
 {
-	if (rayDirX < 0)
+	aff->dirX = normalizeX(cos(aff->orientation), sin(aff->orientation));
+	aff->dirY = normalizeY(cos(aff->orientation), sin(aff->orientation));
+	for (int x = 0; x < (double)aff->w; x++)
 	{
-		ray->stepX = -1;
-		ray->sideDistX = (ray->rayPosX - ray->mapX) * ray->deltaDistX;
-	}
-	else
-	{
-		ray->stepX = 1;
-		ray->sideDistX = (ray->mapX + 1.0 - ray->rayPosX) * ray->deltaDistX;
-	}
-	if (rayDirY < 0)
-	{
-		ray->stepY = -1;
-		ray->sideDistY = (ray->rayPosY - ray->mapY) * ray->deltaDistY;
-	}
-	else
-	{
-		ray->stepY = 1;
-		ray->sideDistY = (ray->mapY + 1.0 - ray->rayPosY) * ray->deltaDistY;
-	}
-}
-
-
-void	ft_calcul2(t_ray *ray)
-{
-	ray->hit = 0;
-	while (ray->hit == 0)
-	{
-		if (ray->sideDistX < ray->sideDistY)
+		aff->cameraX = 2.0f * (double)x / (double)aff->w - 1.0f;
+		aff->rayDirX = aff->dirX + aff->planX * aff->cameraX;
+		aff->rayDirY = aff->dirY + aff->planY * aff->cameraX;
+		
+		aff->mapX = (int)aff->posX;
+		aff->mapY = (int)aff->posY;
+		if (aff->rayDirX == 0)
+			aff->deltaDistX = 1e30;
+		else
+			aff->deltaDistX = absolute(1 / aff->rayDirX);
+		if (aff->rayDirY == 0)
+			aff->deltaDistY = 1e30;
+		else
+			aff->deltaDistY = absolute(1 / aff->rayDirY);
+		aff->hit = 0;
+		
+		if (aff->rayDirX < 0)
 		{
-			ray->sideDistX += ray->deltaDistX;
-			ray->mapX += ray->stepX;
-			ray->side = 0;
+			aff->stepX = -1;
+			aff->sideDistX = (aff->posX - aff->mapX) * aff->deltaDistX;
 		}
 		else
 		{
-			ray->sideDistY += ray->deltaDistY;
-			ray->mapY += ray->stepY;
-			ray->side = 1;
+			aff->stepX = 1;
+			aff->sideDistX = (aff->mapX + 1.0 - aff->posX) * aff->deltaDistX;
 		}
-		if (carte[ray->mapX][ray->mapY] == 1)
-			ray->hit = 1;
-	}	
-}
-
-void	ft_calcul3(t_ray *ray)
-{
-	if (ray->side == 0)
-		ray->perpWallDist = ray->sideDistX - ray->deltaDistX;
-	else
-		ray->perpWallDist = ray->sideDistY - ray->deltaDistY;
-	ray->hauteurLigne = (int)(ray->h / ray->perpWallDist);
-	ray->drawStart = -ray->hauteurLigne / 2 + ray->h / 2;
-	ray->drawEnd = ray->hauteurLigne / 2 + ray->h / 2;
-}
-
-void	render(t_ray *ray, int carte[5][5])
-{
-	while (ray->x <= ray->w)
-	{
-		ray->camX = (2 * ray->x / (double)ray->w) - 1;
-		double rayDirX = ray->DirX + ray->PlaneX * ray->camX;
-		double rayDirY = ray->DirY + ray->PlaneY * ray->camX;
-		ray->mapX = ray->posX;
-		ray->mapY = ray->posY;
-		
-		if (ray->DirX == 0)
-			ray->deltaDistX = 1e30;
+		if (aff->rayDirY < 0)
+		{
+			aff->stepY = -1;
+			aff->sideDistY = (aff->posY - aff->mapY) * aff->deltaDistY;
+		}
 		else
-			ray->deltaDistX = fabs(1 / rayDirX);
-		if (ray->DirY == 0)
-			ray->deltaDistY = 1e30;
+		{
+			aff->stepY = 1;
+			aff->sideDistY = (aff->mapY + 1.0 - aff->posY) * aff->deltaDistY;
+		}
+		while (aff->hit == 0)
+		{
+			if (aff->sideDistX < aff->sideDistY)
+			{
+				aff->sideDistX += aff->deltaDistX;
+				aff->mapX += aff->stepX;
+			 	aff->side = 0;
+			}
+			else
+			{
+				aff->sideDistY += aff->deltaDistY;
+				aff->mapY += aff->stepY;
+				aff->side = 1;
+			}
+			if (aff->worldMap[aff->mapX][aff->mapY] > 0)
+				aff->hit = 1;
+		} 
+		if (aff->side == 0)
+			aff->perpWallDist = (aff->sideDistX - aff->deltaDistX);
 		else
-			ray->deltaDistY = fabs(1 / rayDirY);
-		//printf("%f %f\n", rayon.distv2.x, rayon.distv2.y);
-		ft_calcul1(ray);
-		ft_calcul2(ray);
-		ft_calcul3(ray);
-		
-		//printf("%d et %d\n", ray->drawStart, ray->drawEnd);
-		draw_vert_line(ray, ray->drawStart, ray->drawEnd);
+			aff->perpWallDist = (aff->sideDistY - aff->deltaDistY);
 
-   		ray->x += 1.0;
+		aff->lineHeight = (int)((double)aff->h / aff->perpWallDist);
+
+		aff->drawStart = -aff->lineHeight / 2 + (double)aff->h / 2;
+		if(aff->drawStart < 0)
+			aff->drawStart = 0;
+		aff->drawEnd = aff->lineHeight / 2 + (double)aff->h / 2;
+		if(aff->drawEnd >= (double)aff->h)
+			aff->drawEnd = (double)aff->h - 1;
+			
+		int color;
+		switch(aff->worldMap[aff->mapX][aff->mapY])
+		{
+			case 1:  color = 0xFF0000;  break;
+			case 2:  color = 0x43ff00;  break;
+			case 3:  color = 0x001dff;   break;
+			case 4:  color = 0xFFFF00;  break;
+			default: color = 0xffe900; break;
+		}
+
+		     
+
+		verLine(x, aff->drawStart, aff->drawEnd, color, aff->mlx, aff->win);		
 	}
 			
+		
 }
 
-int	render(t_ray *ray)
-{
-	while (ray->x < ray->w)
-	{
-		ft_calcul1(ray);
-		ft_calcul2(ray);
-		ft_calcul3(ray);
-		x++;
-	}
-	return (0);
-}
-
-void	set_frame_image_pixel(t_ray *ray, t_img *image, int x, int y)
-{
-	if (ray->texture_pixels[y][x] > 0)
-		set_image_pixel(image, x, y, ray->texture_pixels[y][x]);
-	else if (y < ray->h / 2)
-		set_image_pixel(image, x, y, ray->texinfo.hex_ceiling);
-	else if (y < ray->h -1)
-		set_image_pixel(image, x, y, ray->texinfo.hex_floor);
-}
-
-void	render_frame(t_ray *ray)
-{
-	t_img	image;
-	int		x;
-	int		y;
-
-	image.img = NULL;
-	init_img(ray, &image, ray->w, ray->h);
-	y = 0;
-	while (y < ray->h)
-	{
-		x = 0;
-		while (x < ray->w)
-		{
-			set_frame_image_pixel(ray, &image, x, y);
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(ray->mlx, ray->win, image.img, 0, 0);
-	mlx_destroy_image(ray->mlx, image.img);
-}
-
-
-
-void	draw_walls(t_ray *ray)
-{
-
-	int carte[5][5];
-	carte[0][0] = 1;
-	carte[0][1] = 1;
-	carte[0][2] = 1;
-	carte[0][3] = 1;
-	carte[0][4] = 1;
-	
-	carte[1][0] = 1;
-	carte[1][1] = 0;
-	carte[1][2] = 0;
-	carte[1][3] = 0;
-	carte[1][4] = 1;
-	
-	carte[2][0] = 1;
-	carte[2][1] = 0;
-	carte[2][2] = 0;
-	carte[2][3] = 0;
-	carte[2][4] = 1;
-	
-	carte[3][0] = 1;
-	carte[3][1] = 0;
-	carte[3][2] = 0;
-	carte[3][3] = 0;
-	carte[3][4] = 1;
-	
-	carte[4][0] = 1;
-	carte[4][1] = 1;
-	carte[4][2] = 1;
-	carte[4][3] = 1;
-	carte[4][4] = 1;
-	
-	
-	render(ray, carte);
-	render_frame(ray);
-}
-
-
-int	ft_controls(int touche, t_ray *ray)
+int	ft_controls(int touche, t_aff *aff)
 {
 	if (touche == 65361)
 	{
-		ray->posX += 0.2;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
+		aff->orientation -= 0.05;
+		
+		printf("%f %f\n", aff->posX, aff->posY);
+	}
+	
+	if (touche == 65363)
+	{
+		aff->orientation += 0.05;
+		
+		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	if (touche == 97)
 	{
-		ray->posY -= 0.2;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
-	}
-	if (touche == 65363)
-	{
-		ray->posX -= 0.1;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
+		aff->posY -= 0.2;
+		//ft_render(aff);
+		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	if (touche == 100)
 	{
-		ray->posY += 0.1;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
+		aff->posY += 0.2;
+		//ft_render(aff);
+		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	if (touche == 119)
 	{
-		ray->DirX += 0.1;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
+		aff->posX += 0.2;
+		//ft_render(aff);
+		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	if (touche == 115)
 	{
-		ray->DirX -= 0.1;
-		ray->x = 0;
-		draw_walls(ray);
-		printf("%f %f\n", ray->posX, ray->posY);
+		aff->posX -= 0.2;
+		//ft_render(aff);
+		printf("%f %f\n", aff->posX, aff->posY);
 	}
+	if (aff->orientation > 2*3.141592658)
+		aff->orientation -= 2*3.141592658;
+	else if (aff->orientation < 0)
+	 	aff->orientation += 2*3.141592658;
+	ft_render(aff);
 	return (0);
 }
-
 
 int main (int ac, char **av)
 {
@@ -296,46 +201,42 @@ int main (int ac, char **av)
 	void	*win;
 	
 	
-	t_ray *ray = malloc(sizeof(t_ray));
-	init_struct(ray);
+	t_aff	*aff;
+	aff = malloc(sizeof(t_aff));
 	
 	
-	
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 1600, 900, "cub3d");
-	ray->mlx = mlx;
-	ray->win = win;
-	
-	draw_walls(ray);
-	
-	mlx_key_hook(win, ft_controls, ray);
-	
-	
-	/*
-	int bpp;
-	int size_line;
-	int endian;
-	char *img_data = mlx_get_data_addr(img, &bpp, &size_line, &endian);
-	
-	
-	
-	for (int y = 0; y < 900; y++)
+	int worldMap[8][8]=
 	{
-		for (int x = 0; x < 1600; x++)
-		{
-			int pi = (x * 4) + (size_line * y);
-			img_data[pi] = 200;
-			img_data[pi + 1] = 10;
-			img_data[pi + 2] = 75;
-			img_data[pi + 3] = 0;
-			
-		}
-	}
+	  {1,1,1,1,1,1,1,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,0,0,0,0,0,0,1},
+	  {1,1,2,3,4,1,1,1}
+	};
 	
-	*/
+	memcpy(aff->worldMap, worldMap, 8 * 8 * sizeof(int));
+	
+	aff->posX = 3.5;
+	aff->posY = 3.5;
+	aff->orientation = 0;
+	aff->planX = 0;
+	aff->planY = 1;
+	
+
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, 640, 480, "cub3d");
+	mlx_key_hook(win, ft_controls, aff);
+	aff->mlx = mlx;
+	aff->win = win;
+	aff->w = 640;
+	aff->h = 480;
 	
 	
+	ft_render(aff);
 	
-	mlx_loop(ray->mlx);
+	mlx_loop(mlx);
 	return (0);
 }

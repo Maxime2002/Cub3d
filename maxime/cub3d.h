@@ -75,89 +75,38 @@ typedef struct s_info
 
 }			t_info;
 
-typedef struct		s_texture
+typedef struct s_aff
 {
-	int				texdir;
-	double			wallx;
-	int				texx;
-	int				texy;
-	double			step;
-	double			texpos;
-}					t_texture;
-
-typedef struct s_texinfo
-{
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
-	int				*floor;
-	int				*ceiling;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
-	int				size;
-	int				index;
-	double			step;
-	double			pos;
-	int				x;
-	int				y;
-}	t_texinfo;
-
-typedef struct s_ray
-{
-	void	*mlx;
-	void	*win;
-
-	double	w;
-	double	h;
-	double	posX;
-	double	posY;
-	double	DirX;
-	double	DirY;
-	double	PlaneX;
-	double	PlaneY;
-	
-	int	x;
-	double	camX;
-	double	rayPosX;
-	double	rayPosY;
-	double	rayDirX;
-	double	rayDirY;
-			
-	int	mapX;
-	int	mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	int	stepX;
-	int	stepY;
-	int	hit;
-	int	side;
-	double	perpWallDist;
-
-	double	hauteurLigne;
-	int	drawStart;
-	int	drawEnd;
-	
-	char	*addr;
-	int	line_length;
-	
-	int			**texture_pixels;
-	int			**textures;
-	t_texinfo	texinfo;
-	
-	
-}		t_ray;
-
-typedef struct s_imga
-{
-	void	*img;
-	int		*addr;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-}	t_imga;
+	int worldMap[8][8];
+	void *mlx;
+	void *win;
+	int w;
+	int h;
+	double posX;
+	double posY;
+	double dirX;
+	double dirY;
+	double planX;
+	double planY;
+	double cameraX;
+	double rayDirX;
+	double rayDirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double perpWallDist;
+	int stepX;
+	int stepY;
+	int hit;
+	int side;
+	int lineHeight;
+	int drawStart;
+	int drawEnd;
+	double orientation;
+}	t_aff;
 
 /* ==================== function parcing ==================== */
 
