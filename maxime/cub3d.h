@@ -122,7 +122,6 @@ typedef struct s_aff
 	int lineHeight;
 	int drawStart;
 	int drawEnd;
-	double orientation;
 	t_info	*info;
 }	t_aff;
 

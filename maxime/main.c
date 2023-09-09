@@ -105,7 +105,7 @@ void	ft_render(t_aff *aff)
 				aff->mapY += aff->stepY;
 				aff->side = 1;
 			}
-			if (aff->info->map[aff->mapX][aff->mapY] != '0')
+			if (aff->info->map[aff->mapX][aff->mapY] == '1')
 				aff->hit = 1;
 		} 
 		if (aff->side == 0)
@@ -144,9 +144,18 @@ void	ft_render(t_aff *aff)
 		
 }
 
+
+
+
+
+
+
+
+
+
 int	ft_controls(int touche, t_aff *aff)
 {
-	if (touche == 65361)
+	if (touche == 65363)
 	{
 		double oldDirX = aff->dirX;
 	      	aff->dirX = aff->dirX * cos(-(0.033 * 1.8) / 2) - aff->dirY * sin(-(0.033 * 1.8) / 2);
@@ -158,7 +167,7 @@ int	ft_controls(int touche, t_aff *aff)
 		printf("%f %f\n", aff->posX, aff->posY);
 	}
 	
-	if (touche == 65363)
+	if (touche == 65361)
 	{
 		double oldDirX = aff->dirX;
 	      	aff->dirX = aff->dirX * cos((0.033 * 1.8) / 2) - aff->dirY * sin((0.033 * 1.8) / 2);
@@ -169,14 +178,14 @@ int	ft_controls(int touche, t_aff *aff)
 		
 		printf("%f %f\n", aff->posX, aff->posY);
 	}
-	if (touche == 97)
+	if (touche == 100)
 	{
 		if (aff->worldMap[(int)aff->posX + (int)aff->dirY * (int)0.1][(int)aff->posY] == 0)
 			aff->posX += aff->dirY * 0.1;
 		if (aff->worldMap[(int)aff->posX][(int)aff->posY + (int)aff->dirX * (int)0.1] == 0)
 			aff->posY -= aff->dirX * 0.1;
 	}
-	if (touche == 100)
+	if (touche == 97)
 	{
 		if (aff->worldMap[(int)aff->posX + (int)aff->dirY * (int)0.1][(int)aff->posY] == 0)
 			aff->posX -= aff->dirY * 0.1;
@@ -226,10 +235,28 @@ void spaw_playeur(t_aff *aff)
 			break ;
 		i++;
 	}
-	aff->posX = j;
-	aff->posY = i;
-	aff->dirX = 0;
-	aff->dirY = 0;
+	aff->posX = i;
+	aff->posY = j;
+	if (aff->info->map[i][j] == 'N')
+	{
+		aff->dirX = -1;
+		aff->planY = 0.66;
+	}
+	if (aff->info->map[i][j] == 'S')
+	{
+		aff->dirX = 1;
+		aff->planY = -0.66;
+	}
+	if (aff->info->map[i][j] == 'E')
+	{
+		aff->dirY = 1;
+		aff->planX = 0.66;
+	}
+	if (aff->info->map[i][j] == 'W')
+	{
+		aff->dirY = -1;
+		aff->planX = -0.66;
+	}
 }
 
 int main (int argc, char **argv)
@@ -256,14 +283,15 @@ int main (int argc, char **argv)
 	t_aff	*aff;
 	aff = malloc(sizeof(t_aff));
 	
-	aff->posX = 1.5;
-	aff->posY = 1.5;
-	aff->orientation = 0;
+
 	aff->planX = 0;
-	aff->planY = 1;
-	aff->dirX = 1;
+	aff->planY = 0;
+	aff->dirX = 0;
 	aff->dirY = 0;
-	
+	aff->info = info;
+	spaw_playeur(aff);
+	aff->posX += 0.5;
+	aff->posY += 0.5;
 
 	win = mlx_new_window(info->mlx, 640, 480, "cub3d");
 	mlx_key_hook(win, ft_controls, aff);
@@ -271,7 +299,7 @@ int main (int argc, char **argv)
 	info->win = win;
 	aff->w = 640;
 	aff->h = 480;
-	aff->info = info;
+	
 	
 	
 	
