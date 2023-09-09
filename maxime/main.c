@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlangloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:56:48 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/05 13:56:49 by mlangloi         ###   ########.fr       */
+/*   Updated: 2023/09/09 15:47:16 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_render(t_aff *aff)
 		color = 0xFFFFFF;
 
 
-		verLine(x, aff->drawStart, aff->drawEnd, color, aff->mlx, aff->win);		
+		verLine(x, aff->drawStart, aff->drawEnd, color, aff->info->mlx, aff->info->win);		
 	}
 			
 		
@@ -203,10 +203,33 @@ int	ft_controls(int touche, t_aff *aff)
 
 int ft_exit(t_aff *aff)
 {
-	mlx_clear_window(aff->mlx, aff->win);
-	mlx_destroy_window(aff->mlx, aff->win);
-	mlx_destroy_display(aff->mlx);
+	mlx_clear_window(aff->info->mlx, aff->info->win);
+	mlx_destroy_window(aff->info->mlx, aff->info->win);
+	mlx_destroy_display(aff->info->mlx);
 	return (0);
+}
+
+void spaw_playeur(t_aff *aff)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (aff->info->map[i])
+	{
+		j = -1;
+		while (aff->info->map[i][++j])
+			if (aff->info->map[i][j] == 'N' || aff->info->map[i][j] == 'S'
+				|| aff->info->map[i][j] == 'E' || aff->info->map[i][j] == 'W')
+				break ;
+		if (aff->info->map[i][j] != '\0')
+			break ;
+		i++;
+	}
+	aff->posX = j;
+	aff->posY = i;
+	aff->dirX = 0;
+	aff->dirY = 0;
 }
 
 int main (int argc, char **argv)
@@ -233,11 +256,8 @@ int main (int argc, char **argv)
 	t_aff	*aff;
 	aff = malloc(sizeof(t_aff));
 	
-	
-	
-	
-	aff->posX = 3.5;
-	aff->posY = 3.5;
+	aff->posX = 1.5;
+	aff->posY = 1.5;
 	aff->orientation = 0;
 	aff->planX = 0;
 	aff->planY = 1;
@@ -247,16 +267,16 @@ int main (int argc, char **argv)
 
 	win = mlx_new_window(info->mlx, 640, 480, "cub3d");
 	mlx_key_hook(win, ft_controls, aff);
-	aff->mlx = info->mlx;
-	aff->win = win;
+	info->mlx = info->mlx;
+	info->win = win;
 	aff->w = 640;
 	aff->h = 480;
 	aff->info = info;
 	
 	
 	
-	mlx_loop_hook(aff->mlx, (void *)ft_render, aff);
-	mlx_hook(aff->win, 17, 0, ft_exit, aff);
+	mlx_loop_hook(info->mlx, (void *)ft_render, aff);
+	mlx_hook(info->win, 17, 0, ft_exit, aff);
 	mlx_loop(info->mlx);
 	return (0);
 }

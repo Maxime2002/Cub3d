@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/05 19:18:58 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/09 15:34:09 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ typedef struct s_info
 typedef struct s_aff
 {
 	int worldMap[8][8];
-	void *mlx;
-	void *win;
 	int w;
 	int h;
 	double posX;
