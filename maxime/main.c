@@ -51,6 +51,8 @@ void	ft_render(t_aff *aff)
 		
 		aff->mapX = (int)aff->posX;
 		aff->mapY = (int)aff->posY;
+		aff->hit = 0;
+		
 		if (aff->rayDirX == 0)
 			aff->deltaDistX = 1e30;
 		else
@@ -59,7 +61,15 @@ void	ft_render(t_aff *aff)
 			aff->deltaDistY = 1e30;
 		else
 			aff->deltaDistY = absolute(1 / aff->rayDirY);
-		aff->hit = 0;
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		if (aff->rayDirX < 0)
 		{
@@ -95,7 +105,6 @@ void	ft_render(t_aff *aff)
 				aff->mapY += aff->stepY;
 				aff->side = 1;
 			}
-			printf("test ; %d\n", aff->info->map[aff->mapX][aff->mapY]);
 			if (aff->info->map[aff->mapX][aff->mapY] != '0')
 				aff->hit = 1;
 		} 
@@ -103,6 +112,15 @@ void	ft_render(t_aff *aff)
 			aff->perpWallDist = (aff->sideDistX - aff->deltaDistX);
 		else
 			aff->perpWallDist = (aff->sideDistY - aff->deltaDistY);
+
+		/*
+		if (aff->side == 0)
+			aff->perpWallDist = ((double)aff->mapX - \
+				aff->posX + (1 - (double)aff->stepX) / 2) / aff->rayDirX;
+		else
+			aff->perpWallDist = ((double)aff->mapY - \
+				aff->posY + (1 - (double)aff->stepY) / 2) / aff->rayDirY;
+*/
 
 		aff->lineHeight = (int)((double)aff->h / aff->perpWallDist);
 
@@ -113,10 +131,12 @@ void	ft_render(t_aff *aff)
 		if(aff->drawEnd >= (double)aff->h)
 			aff->drawEnd = (double)aff->h - 1;
 			
+			
+			
+			
 		int color;
 		color = 0xFFFFFF;
 
-		     
 
 		verLine(x, aff->drawStart, aff->drawEnd, color, aff->mlx, aff->win);		
 	}
@@ -151,32 +171,41 @@ int	ft_controls(int touche, t_aff *aff)
 	}
 	if (touche == 97)
 	{
-		aff->posY -= 0.2;
-		//ft_render(aff);
-		printf("%f %f\n", aff->posX, aff->posY);
+		if (aff->worldMap[(int)aff->posX + (int)aff->dirY * (int)0.1][(int)aff->posY] == 0)
+			aff->posX += aff->dirY * 0.1;
+		if (aff->worldMap[(int)aff->posX][(int)aff->posY + (int)aff->dirX * (int)0.1] == 0)
+			aff->posY -= aff->dirX * 0.1;
 	}
 	if (touche == 100)
 	{
-		aff->posY += 0.2;
-		//ft_render(aff);
-		printf("%f %f\n", aff->posX, aff->posY);
+		if (aff->worldMap[(int)aff->posX + (int)aff->dirY * (int)0.1][(int)aff->posY] == 0)
+			aff->posX -= aff->dirY * 0.1;
+		if (aff->worldMap[(int)aff->posX][(int)aff->posY + (int)aff->dirX * (int)0.1] == 0)
+			aff->posY += aff->dirX * 0.1;
 	}
 	if (touche == 119)
 	{
 		if (aff->worldMap[(int)aff->posX + (int)aff->dirX * (int)0.1][(int)aff->posY] == 0)
 			aff->posX += aff->dirX * 0.1;
 		if (aff->worldMap[(int)aff->posX][(int)aff->posY + (int)aff->dirY * (int)0.1] == 0)
-			aff->posX += aff->dirX * 0.1;
-		//ft_render(aff);
-		printf("test %f %f\n", aff->posX, aff->posY);
+			aff->posY += aff->dirY * 0.1;
 	}
 	if (touche == 115)
 	{
-		aff->posX -= 0.2;
-		//ft_render(aff);
-		printf("%f %f\n", aff->posX, aff->posY);
+		if (aff->worldMap[(int)aff->posX - (int)aff->dirX * (int)0.1][(int)aff->posY] == 0)
+			aff->posX -= aff->dirX * 0.1;
+		if (aff->worldMap[(int)aff->posX][(int)aff->posY - (int)aff->dirY * (int)0.1] == 0)
+			aff->posY -= aff->dirY * 0.1;
+		printf("tr%f %f\n", aff->posX, aff->posY);
 	}
-	ft_render(aff);
+	return (0);
+}
+
+int ft_exit(t_aff *aff)
+{
+	mlx_clear_window(aff->mlx, aff->win);
+	mlx_destroy_window(aff->mlx, aff->win);
+	mlx_destroy_display(aff->mlx);
 	return (0);
 }
 
@@ -226,8 +255,8 @@ int main (int argc, char **argv)
 	
 	
 	
-	ft_render(aff);
-	
+	mlx_loop_hook(aff->mlx, (void *)ft_render, aff);
+	mlx_hook(aff->win, 17, 0, ft_exit, aff);
 	mlx_loop(info->mlx);
 	return (0);
 }
