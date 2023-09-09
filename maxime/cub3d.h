@@ -75,7 +75,11 @@ typedef struct s_img
 {
 	int		w;
 	int		h;
-
+	
+	int	*addr;
+	int	bpp;
+	int	line_length;
+	int	endian;
 	void	*img;
 }			t_img;
 
@@ -93,6 +97,16 @@ typedef struct s_info
 	t_color	ground;
 
 }			t_info;
+
+typedef struct		s_texture
+{
+	int				texdir;
+	double			wallx;
+	int				texx;
+	int				texy;
+	double			step;
+	double			texpos;
+}					t_texture;
 
 typedef struct s_aff
 {
@@ -123,6 +137,14 @@ typedef struct s_aff
 	int drawStart;
 	int drawEnd;
 	t_info	*info;
+	void	*img;
+	int	*addr;
+	int	bpp;
+	int	line_length;
+	int	endian;
+	t_texture	t;
+	int	c;
+	int	f;
 }	t_aff;
 
 /* ==================== function parsing ==================== */
