@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/09 15:34:09 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/11 19:40:07 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@
 # define ERRCODE_CUB 4
 # define ERRMSG_CUB "Error\nThe file must end with a .cub.\n"
 # define ERRCODE_READ 5
-# define ERRMSG_READ "Error\nReading the file didn't work.\n"
+# define ERRMSG_READ "Error\nfailed to read the file.\n"
 # define ERRCODE_MAP_VOID 6
-# define ERRMSG_MAP_VOID "Error\nThe map is missing in the file.\n"
+# define ERRMSG_MAP_VOID "Error\nThe map is missing\n"
 # define ERRCODE_XPM_FILE 7
-# define ERRMSG_XPM_FILE "Error\nImage loading to fail.\n"
+# define ERRMSG_XPM_FILE "Error\nImage failed to load.\n"
 # define ERRCODE_NB_MAX_COLOR 8
 # define ERRMSG_NB_MAX_COLOR "Error\nThe color is greater than 255.\n"
 # define ERRCODE_NB_NEG_COLOR 9
@@ -55,147 +55,156 @@
 # define ERRMSG_INVALID_MAP "Error\nThe map is invalid.\n"
 # define ERRCODE_MLX 15
 # define ERRMSG_MLX "Error\nWhen initializing the minilibx.\n"
+# define ERRCODE_NEW_IMAGE 16
+# define ERRMSG_NEW_IMAGE "Error\nCreating main image.\n"
 
 /* ==================== include ==================== */
 
 # include "../minilibx-linux/mlx.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <unistd.h>
-# include <math.h>
 
 /* ==================== structure ==================== */
 
 typedef struct s_color
 {
-	int		r;
-	int		g;
-	int		b;
+	int			r;
+	int			g;
+	int			b;
 
-}			t_color;
+}				t_color;
 
 typedef struct s_img
 {
-	int		w;
-	int		h;
-	
-	int	*addr;
-	int	bpp;
-	int	line_length;
-	int	endian;
-	void	*img;
-}			t_img;
+	int			w;
+	int			h;
+
+	int			*addr;
+	int			bpp;
+	int			line_length;
+	int			endian;
+	void		*img;
+}				t_img;
 
 typedef struct s_info
 {
-	void	*mlx;
-	void	*win;
-	char	**map;
-	t_img	no;
-	t_img	so;
-	t_img	we;
-	t_img	ea;
+	void		*mlx;
+	void		*win;
+	char		**map;
+	t_img		no;
+	t_img		so;
+	t_img		we;
+	t_img		ea;
 
-	t_color	ceiling;
-	t_color	ground;
+	t_color		ceiling;
+	t_color		ground;
 
-}			t_info;
+}				t_info;
 
-typedef struct		s_texture
+typedef struct s_texture
 {
-	int				texdir;
-	double			wallx;
-	int				texx;
-	int				texy;
-	double			step;
-	double			texpos;
-}					t_texture;
+	int			texdir;
+	double		wallx;
+	int			texx;
+	int			texy;
+	double		step;
+	double		texpos;
+}				t_texture;
 
 typedef struct s_aff
 {
-	int worldMap[8][8];
-	int w;
-	int h;
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planX;
-	double planY;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	int mapX;
-	int mapY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-	t_info	*info;
-	void	*img;
-	int	*addr;
-	int	bpp;
-	int	line_length;
-	int	endian;
+	int			worldMap[8][8];
+	int			w;
+	int			h;
+	double		posX;
+	double		posY;
+	double		dirX;
+	double		dirY;
+	double		planX;
+	double		planY;
+	double		cameraX;
+	double		rayDirX;
+	double		rayDirY;
+	int			mapX;
+	int			mapY;
+	double		sideDistX;
+	double		sideDistY;
+	double		deltaDistX;
+	double		deltaDistY;
+	double		perpWallDist;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
+	int			lineHeight;
+	int			drawStart;
+	int			drawEnd;
+	t_info		*info;
+	void		*img;
+	int			*addr;
+	int			bpp;
+	int			line_length;
+	int			endian;
 	t_texture	t;
-	int	c;
-	int	f;
-}	t_aff;
+	int			c;
+	int			f;
+}				t_aff;
 
 /* ==================== function parsing ==================== */
 
-int			ft_parsing(int argc, char **argv, t_info *info);
-int			ft_init_map_and_arg(int fd, t_info *info);
-int			ft_init_arg(t_info *info, char *dest);
-int			ft_charg_color(t_color *color, char *line);
-int			ft_charg_img(t_img *img, char *line, t_info *info);
-int			ft_count_number(char *src);
-int			ft_charg_map(t_info *info, char *dest, int i);
-int			ft_feasibility_check(t_info *info);
+int				ft_parsing(int argc, char **argv, t_info *info);
+int				ft_init_map_and_arg(int fd, t_info *info);
+int				ft_init_arg(t_info *info, char *dest);
+int				ft_charg_color(t_color *color, char *line);
+int				ft_charg_img(t_img *img, char *line, t_info *info);
+int				ft_count_number(char *src);
+int				ft_charg_map(t_info *info, char *dest, int i);
+int				ft_feasibility_check(t_info *info);
+
+/* ==================== function start ==================== */
+
+int				ft_start(int argc, char **argv, t_info **info, t_aff **aff);
+void			spawn_player(t_aff *aff);
 
 /* ==================== function error ==================== */
 
-int			print_error_message(int error_code);
-void		*print_error_message_null(int error_code);
-int			print_error_message_val(int error_code, int code);
+int				print_error_message(int error_code);
+void			*print_error_message_null(int error_code);
+int				print_error_message_val(int error_code, int code);
 
 /* ==================== function utils ==================== */
 
-int			ft_strlen(char *src);
-int			ft_strlen_char(char *src, char c);
-char		*ft_strjoin_free_1(char *s1, char *s2);
-int			ft_atoi(const char *nptr);
-int			ft_count_nb_char(char *dest, char c);
-char		**ft_strcpy_tab(char **src);
-char		*ft_strdup(char *src);
-float	absolute(float a);
+int				ft_strlen(char *src);
+int				ft_strlen_char(char *src, char c);
+char			*ft_strjoin_free_1(char *s1, char *s2);
+int				ft_atoi(const char *nptr);
+int				ft_count_nb_char(char *dest, char c);
+char			**ft_strcpy_tab(char **src);
+char			*ft_strdup(char *src);
+float			absolute(float a);
 
 /* ========= gnl function ========= */
 
-char		*get_next_line(int fd);
-char		*ft_join_modif(char *s1, char *s2);
-void		ft_buf_cut(char *dest);
-int			ft_chr(char *s);
+char			*get_next_line(int fd);
+char			*ft_join_modif(char *s1, char *s2);
+void			ft_buf_cut(char *dest);
+int				ft_chr(char *s);
 
 /* ==================== function free ==================== */
 
-int			ft_free_img(t_info *info);
-int			ft_free_map(char **map);
+int				ft_free_img(t_info *info);
+int				ft_free_map(char **map);
+int				ft_exit(t_aff *aff);
 
+/* ==================== function algo ==================== */
 
-void	ft_render(t_aff *aff);
-int		ft_color_column(t_aff *aff, int x);
-void	ft_texture(t_aff *aff);
+void			ft_render(t_aff *aff);
+int				ft_color_column(t_aff *aff, int x);
+void			ft_texture(t_aff *aff);
 
 #endif
