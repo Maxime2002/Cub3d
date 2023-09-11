@@ -4,6 +4,7 @@ LIBDIR = ../minilibx-linux
 
 SRCS	=	main.c	\
 			ft_error.c \
+			ft_start.c \
 			utils/ft_strlen.c \
 			utils/get_next_line.c \
 			utils/get_next_line_utils.c \

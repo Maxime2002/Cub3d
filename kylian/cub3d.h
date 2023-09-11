@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 14:55:42 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/11 14:42:47 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 255
 # endif
+
+# define WIDTH 1366
+# define HEIGHT 768
 
 /* ==================== error ==================== */
 
@@ -50,6 +53,8 @@
 # define ERRMSG_PLAYEUR_MAP "Error\nNot the right number of starting points.\n"
 # define ERRCODE_INVALID_MAP 14
 # define ERRMSG_INVALID_MAP "Error\nThe map is invalid.\n"
+# define ERRCODE_MLX 15
+# define ERRMSG_MLX "Error\nWhen initializing the minilibx.\n"
 
 /* ==================== include ==================== */
 
@@ -94,6 +99,16 @@ typedef struct s_info
 
 }			t_info;
 
+typedef struct s_game
+{
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+
+	t_info	*info;
+}			t_game;
+
 /* ==================== function parsing ==================== */
 
 int			ft_parsing(int argc, char **argv, t_info *info);
@@ -104,6 +119,11 @@ int			ft_charg_img(t_img *img, char *line, t_info *info);
 int			ft_count_number(char *src);
 int			ft_charg_map(t_info *info, char *dest, int i);
 int			ft_feasibility_check(t_info *info);
+
+/* ==================== function start ==================== */
+
+int			ft_start(int argc, char **argv, t_info **info, t_game **game);
+void		ft_give_value(t_info *info, t_game *game);
 
 /* ==================== function error ==================== */
 
