@@ -70,9 +70,11 @@ int		ft_init_aff(t_aff *aff, t_info *info)
 	aff->posY = 0.5;
 	aff->w = WIDTH;
 	aff->h = HEIGHT;
-	
+
 	aff->c = (0 << 24 | info->ceiling.r << 16 | info->ceiling.g << 8 | info->ceiling.b);
+	//printf("ccccccc: %d\n", aff->c);
 	aff->f = (0 << 24 | info->ground.r << 16 | info->ground.g << 8 | info->ground.b);
+	//printf("fffffff: %d\n", aff->f);
 	aff->img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
 	if (!aff->img)
 	{

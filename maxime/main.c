@@ -51,35 +51,33 @@ int	ft_controls(int touche, t_aff *aff)
 		aff->planX = aff->planX * cos((0.033 * 1.8) / 2) - aff->planY * sin((0.033 * 1.8) / 2);
 		aff->planY = oldPlaneX * sin((0.033 * 1.8) / 2) + aff->planY * cos((0.033 * 1.8) / 2);
 	}
-	if (touche == 100)
-	{
-		printf("test ; %c\n", aff->info->map[(int)aff->posX + (int)aff->dirY * (int)0.11][(int)aff->posY]);
-		if (aff->info->map[(int)aff->posX + (int)aff->dirY * (int)0.11][(int)aff->posY] != '1')
-			aff->posX += aff->dirY * 0.11;
-		if (aff->info->map[(int)aff->posX][(int)aff->posY + (int)aff->dirX * (int)0.11] != '1')
-			aff->posY -= aff->dirX * 0.11;
-	}
-	if (touche == 97)
-	{
-		printf("test ; %c\n", aff->info->map[(int)aff->posX + (int)aff->dirY * (int)0.11][(int)aff->posY]);
-		if (aff->info->map[(int)aff->posX + (int)aff->dirY * (int)0.11][(int)aff->posY] != '1')
-			aff->posX -= aff->dirY * 0.11;
-		if (aff->info->map[(int)aff->posX][(int)aff->posY + (int)aff->dirX * (int)0.11] != '1')
-			aff->posY += aff->dirX * 0.11;
-	}
 	if (touche == 119)
 	{
-		if (aff->info->map[(int)aff->posX + (int)aff->dirX * (int)0.11][(int)aff->posY] != '1')
-			aff->posX += aff->dirX * 0.11;
-		if (aff->info->map[(int)aff->posX][(int)aff->posY + (int)aff->dirY * (int)0.11] != '1')
-			aff->posY += aff->dirY * 0.11;
+		if (aff->info->map[(int)(aff->posX + (aff->dirX * 0.1 * 2))][(int)aff->posY] != '1')
+			aff->posX += aff->dirX * 0.1;
+		if (aff->info->map[(int)(aff->posX)][(int)(aff->posY + (aff->dirY * 0.1 * 2))] != '1')
+			aff->posY += aff->dirY * 0.1;
 	}
 	if (touche == 115)
 	{
-		if (aff->info->map[(int)aff->posX - (int)aff->dirX * (int)0.11][(int)aff->posY] != '1')
-			aff->posX -= aff->dirX * 0.11;
-		if (aff->info->map[(int)aff->posX][(int)aff->posY - (int)aff->dirY * (int)0.11] != '1')
-			aff->posY -= aff->dirY * 0.11;
+		if (aff->info->map[(int)(aff->posX - (aff->dirX * 0.1 * 2))][(int)(aff->posY)] != '1')
+			aff->posX -= aff->dirX * 0.1;
+		if (aff->info->map[(int)(aff->posX)][(int)(aff->posY - (aff->dirY * 0.1 * 2))] != '1')
+			aff->posY -= aff->dirY * 0.1;
+	}
+	if (touche == 100)
+	{	
+		if (aff->info->map[(int)(aff->posX + aff->dirY * (0.1 * 2))][(int)aff->posY] != '1')
+			aff->posX += aff->dirY * 0.1;
+		if (aff->info->map[(int)aff->posX][(int)(aff->posY - aff->dirX * (0.1 * 2))] != '1')
+			aff->posY -= aff->dirX * 0.1;
+	}
+	if (touche == 97)
+	{
+		if (aff->info->map[(int)(aff->posX - aff->dirY * (0.1 * 2))][(int)aff->posY] != '1')
+			aff->posX -= aff->dirY * 0.1;
+		if (aff->info->map[(int)aff->posX][(int)(aff->posY + aff->dirX * (0.1 * 2))] != '1')
+			aff->posY += aff->dirX * 0.1;
 	}
 	if (touche == 65307)
 		ft_exit(aff);
