@@ -19,6 +19,9 @@
 #  define BUFFER_SIZE 255
 # endif
 
+# define WIDTH 640
+# define HEIGHT 480
+
 /* ==================== error ==================== */
 
 # define ERRCODE_ERR 0
@@ -50,6 +53,8 @@
 # define ERRMSG_PLAYEUR_MAP "Error\nNot the right number of starting points.\n"
 # define ERRCODE_INVALID_MAP 14
 # define ERRMSG_INVALID_MAP "Error\nThe map is invalid.\n"
+# define ERRCODE_MLX 15
+# define ERRMSG_MLX "Error\nWhen initializing the minilibx.\n"
 
 /* ==================== include ==================== */
 
@@ -60,6 +65,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <math.h>
 
 /* ==================== structure ==================== */
 
@@ -173,6 +179,7 @@ int			ft_atoi(const char *nptr);
 int			ft_count_nb_char(char *dest, char c);
 char		**ft_strcpy_tab(char **src);
 char		*ft_strdup(char *src);
+float	absolute(float a);
 
 /* ========= gnl function ========= */
 
@@ -185,5 +192,10 @@ int			ft_chr(char *s);
 
 int			ft_free_img(t_info *info);
 int			ft_free_map(char **map);
+
+
+void	ft_render(t_aff *aff);
+int		ft_color_column(t_aff *aff, int x);
+void	ft_texture(t_aff *aff);
 
 #endif
