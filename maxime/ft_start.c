@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:36:55 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/11 19:38:10 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/11 19:54:38 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int		ft_init_aff(t_aff *aff, t_info *info)
 	aff->w = WIDTH;
 	aff->h = HEIGHT;
 	
-	aff->c = 0x000000;
-	aff->f = 0x000000;
+	aff->c = (0 << 24 | info->ceiling.r << 16 | info->ceiling.g << 8 | info->ceiling.b);
+	aff->f = (0 << 24 | info->ground.r << 16 | info->ground.g << 8 | info->ground.b);
 	aff->img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
 	if (!aff->img)
 	{

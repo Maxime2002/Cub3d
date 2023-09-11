@@ -13,13 +13,14 @@ SRCS	=	main.c	\
 			utils/ft_count_nb_char.c \
 			utils/ft_strcpy_tab.c \
 			utils/ft_strdup.c \
+			utils/ft_absolute.c \ 
 			parsing/ft_parsing.c \
 			parsing/ft_init_map_and_arg.c \
 			parsing/ft_fill_arg.c \
 			parsing/ft_charg_color_img.c \
 			parsing/ft_charg_map.c \
 			parsing/ft_feasibility_check.c \
-			ft_start.c \
+			ft_init.c \
 			ft_free.c \
 			raycasting.c \
 			affichage.c \
