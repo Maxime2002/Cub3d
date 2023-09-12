@@ -24,6 +24,7 @@ SRCS	=	main.c	\
 			ft_free.c \
 			raycasting.c \
 			affichage.c \
+			ft_controls.c \
 
 OBJ =	${SRCS:.c=.o}
 

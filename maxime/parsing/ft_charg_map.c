@@ -69,7 +69,7 @@ int	ft_charg_map(t_info *info, char *dest, int i)
 		i++;
 	if (!dest[i])
 		return (print_error_message(ERRCODE_MAP_VOID));
-	info->map = malloc(sizeof(char *) * (ft_count_nb_char(dest + i, '\n') + 1));
+	info->map = malloc(sizeof(char *) * (ft_count_nb_char(dest + i, '\n') + 2));
 	if (!info->map)
 		return (print_error_message(ERRCODE_MALLOC));
 	j = 0;

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"cub3d.h"
+#include "cub3d.h"
 
-int ft_exit(t_aff *aff)
+int	ft_exit(t_aff *aff)
 {
 	mlx_destroy_image(aff->info->mlx, aff->img);
 	if (aff->info->win)
@@ -30,79 +30,15 @@ int ft_exit(t_aff *aff)
 	return (0);
 }
 
-int	ft_controls(int touche, t_aff *aff)
-{
-	if (touche == 65363)
-	{
-		double oldDirX = aff->dirX;
-	      	aff->dirX = aff->dirX * cos(-(0.033 * 1.8) / 2) - aff->dirY * sin(-(0.033 * 1.8) / 2);
-	      	aff->dirY = oldDirX * sin(-(0.033 * 1.8) / 2) + aff->dirY * cos(-(0.033 * 1.8) / 2);
-		double oldPlaneX = aff->planX;
-		aff->planX = aff->planX * cos(-(0.033 * 1.8) / 2) - aff->planY * sin(-(0.033 * 1.8) / 2);
-		aff->planY = oldPlaneX * sin(-(0.033 * 1.8) / 2) + aff->planY * cos(-(0.033 * 1.8) / 2);
-	}
-	
-	if (touche == 65361)
-	{
-		double oldDirX = aff->dirX;
-	      	aff->dirX = aff->dirX * cos((0.033 * 1.8) / 2) - aff->dirY * sin((0.033 * 1.8) / 2);
-	      	aff->dirY = oldDirX * sin((0.033 * 1.8) / 2) + aff->dirY * cos((0.033 * 1.8) / 2);
-		double oldPlaneX = aff->planX;
-		aff->planX = aff->planX * cos((0.033 * 1.8) / 2) - aff->planY * sin((0.033 * 1.8) / 2);
-		aff->planY = oldPlaneX * sin((0.033 * 1.8) / 2) + aff->planY * cos((0.033 * 1.8) / 2);
-	}
-	if (touche == 119)
-	{
-		if (aff->info->map[(int)(aff->posX + (aff->dirX * 0.1 * 2))][(int)aff->posY] != '1')
-			aff->posX += aff->dirX * 0.1;
-		if (aff->info->map[(int)(aff->posX)][(int)(aff->posY + (aff->dirY * 0.1 * 2))] != '1')
-			aff->posY += aff->dirY * 0.1;
-	}
-	if (touche == 115)
-	{
-		if (aff->info->map[(int)(aff->posX - (aff->dirX * 0.1 * 2))][(int)(aff->posY)] != '1')
-			aff->posX -= aff->dirX * 0.1;
-		if (aff->info->map[(int)(aff->posX)][(int)(aff->posY - (aff->dirY * 0.1 * 2))] != '1')
-			aff->posY -= aff->dirY * 0.1;
-	}
-	if (touche == 100)
-	{	
-		if (aff->info->map[(int)(aff->posX + aff->dirY * (0.1 * 2))][(int)aff->posY] != '1')
-			aff->posX += aff->dirY * 0.1;
-		if (aff->info->map[(int)aff->posX][(int)(aff->posY - aff->dirX * (0.1 * 2))] != '1')
-			aff->posY -= aff->dirX * 0.1;
-	}
-	if (touche == 97)
-	{
-		if (aff->info->map[(int)(aff->posX - aff->dirY * (0.1 * 2))][(int)aff->posY] != '1')
-			aff->posX -= aff->dirY * 0.1;
-		if (aff->info->map[(int)aff->posX][(int)(aff->posY + aff->dirX * (0.1 * 2))] != '1')
-			aff->posY += aff->dirX * 0.1;
-	}
-	if (touche == 65307)
-		ft_exit(aff);
-	return (0);
-}
-
-int ft_mouse_move(int x, int y, t_aff *aff)
+int	ft_mouse_move(int x, int y, t_aff *aff)
 {
 	if (x > WIDTH / 2)
 	{
-		double oldDirX = aff->dirX;
-	      	aff->dirX = aff->dirX * cos(-(0.033 * 1.8) / 2) - aff->dirY * sin(-(0.033 * 1.8) / 2);
-	      	aff->dirY = oldDirX * sin(-(0.033 * 1.8) / 2) + aff->dirY * cos(-(0.033 * 1.8) / 2);
-		double oldPlaneX = aff->planX;
-		aff->planX = aff->planX * cos(-(0.033 * 1.8) / 2) - aff->planY * sin(-(0.033 * 1.8) / 2);
-		aff->planY = oldPlaneX * sin(-(0.033 * 1.8) / 2) + aff->planY * cos(-(0.033 * 1.8) / 2);
+		ft_droite(aff);
 	}
 	else if (x < WIDTH / 2)
 	{
-		double oldDirX = aff->dirX;
-	      	aff->dirX = aff->dirX * cos((0.033 * 1.8) / 2) - aff->dirY * sin((0.033 * 1.8) / 2);
-	      	aff->dirY = oldDirX * sin((0.033 * 1.8) / 2) + aff->dirY * cos((0.033 * 1.8) / 2);
-		double oldPlaneX = aff->planX;
-		aff->planX = aff->planX * cos((0.033 * 1.8) / 2) - aff->planY * sin((0.033 * 1.8) / 2);
-		aff->planY = oldPlaneX * sin((0.033 * 1.8) / 2) + aff->planY * cos((0.033 * 1.8) / 2);
+		ft_gauche(aff);
 	}
 	x = WIDTH / 2;
 	y = HEIGHT / 2;
@@ -110,11 +46,11 @@ int ft_mouse_move(int x, int y, t_aff *aff)
 	return (0);
 }
 
-int main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_info*info;
+	t_info	*info;
 	t_aff	*aff;
-	
+
 	info = NULL;
 	aff = NULL;
 	if (ft_start(argc, argv, &info, &aff) == 1)
@@ -123,12 +59,12 @@ int main (int argc, char **argv)
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "cub3d");
 	if (!info->win)
 		return (ft_exit(aff));
-	mlx_mouse_hide(info->mlx, info->win); // cache la souris
-	mlx_hook(info->win, 6, (1L<<6), ft_mouse_move, aff);
+	mlx_mouse_hide(info->mlx, info->win);
+	mlx_hook(info->win, 6, (1L << 6), ft_mouse_move, aff);
 	mlx_hook(info->win, 2, 1, ft_controls, aff);
 	ft_texture(aff);
-	aff->addr = (int *)mlx_get_data_addr(aff->img, &aff->
-			bpp, &aff->line_length, &aff->endian);
+	aff->addr = (int *)mlx_get_data_addr(aff->img, &aff->bpp,
+			&aff->line_length, &aff->endian);
 	mlx_loop_hook(info->mlx, (void *)ft_render, aff);
 	mlx_hook(info->win, 17, 0, ft_exit, aff);
 	mlx_loop(info->mlx);

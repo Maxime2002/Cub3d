@@ -207,4 +207,11 @@ void			ft_render(t_aff *aff);
 int				ft_color_column(t_aff *aff, int x);
 void			ft_texture(t_aff *aff);
 
+
+/* ==================== function controls ==================== */
+
+void			ft_droite(t_aff *aff);
+void			ft_gauche(t_aff *aff);
+int				ft_controls(int touche, t_aff *aff);
+
 #endif
