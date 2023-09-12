@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/11 19:40:07 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:18:59 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,32 +118,31 @@ typedef struct s_texture
 
 typedef struct s_aff
 {
-	int			worldMap[8][8];
 	int			w;
 	int			h;
-	double		posX;
-	double		posY;
-	double		dirX;
-	double		dirY;
-	double		planX;
-	double		planY;
-	double		cameraX;
-	double		rayDirX;
-	double		rayDirY;
-	int			mapX;
-	int			mapY;
-	double		sideDistX;
-	double		sideDistY;
-	double		deltaDistX;
-	double		deltaDistY;
-	double		perpWallDist;
-	int			stepX;
-	int			stepY;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plan_x;
+	double		plan_y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
 	int			hit;
 	int			side;
-	int			lineHeight;
-	int			drawStart;
-	int			drawEnd;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
 	t_info		*info;
 	void		*img;
 	int			*addr;
@@ -206,7 +205,6 @@ int				ft_exit(t_aff *aff);
 void			ft_render(t_aff *aff);
 int				ft_color_column(t_aff *aff, int x);
 void			ft_texture(t_aff *aff);
-
 
 /* ==================== function controls ==================== */
 

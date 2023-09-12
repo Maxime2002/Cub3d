@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:36:55 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/11 19:54:38 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:15:06 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,30 @@ void	spawn_dir(t_aff *aff, char player)
 {
 	if (player == 'N')
 	{
-		aff->dirX = -1;
-		aff->planY = 0.66;
+		aff->dir_x = -1;
+		aff->plan_y = 0.66;
 	}
 	if (player == 'S')
 	{
-		aff->dirX = 1;
-		aff->planY = -0.66;
+		aff->dir_x = 1;
+		aff->plan_y = -0.66;
 	}
 	if (player == 'E')
 	{
-		aff->dirY = 1;
-		aff->planX = 0.66;
+		aff->dir_y = 1;
+		aff->plan_x = 0.66;
 	}
 	if (player == 'W')
 	{
-		aff->dirY = -1;
-		aff->planX = -0.66;
+		aff->dir_y = -1;
+		aff->plan_x = -0.66;
 	}
 }
 
-void spawn_player(t_aff *aff)
+void	spawn_player(t_aff *aff)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (aff->info->map[i])
@@ -53,28 +53,26 @@ void spawn_player(t_aff *aff)
 			break ;
 		i++;
 	}
-	aff->posX += i;
-	aff->posY += j;
+	aff->pos_x += i;
+	aff->pos_y += j;
 	spawn_dir(aff, aff->info->map[i][j]);
 }
 
-int		ft_init_aff(t_aff *aff, t_info *info)
+int	ft_init_aff(t_aff *aff, t_info *info)
 {
-	aff->planX = 0;
-	aff->planY = 0;
-	aff->dirX = 0;
-	aff->dirY = 0;
+	aff->plan_x = 0;
+	aff->plan_y = 0;
+	aff->dir_x = 0;
+	aff->dir_y = 0;
 	aff->info = info;
-	
-	aff->posX = 0.5;
-	aff->posY = 0.5;
+	aff->pos_x = 0.5;
+	aff->pos_y = 0.5;
 	aff->w = WIDTH;
 	aff->h = HEIGHT;
-
-	aff->c = (0 << 24 | info->ceiling.r << 16 | info->ceiling.g << 8 | info->ceiling.b);
-	//printf("ccccccc: %d\n", aff->c);
-	aff->f = (0 << 24 | info->ground.r << 16 | info->ground.g << 8 | info->ground.b);
-	//printf("fffffff: %d\n", aff->f);
+	aff->c = (0 << 24 | info->ceiling.r << 16 | info->ceiling.g << 8
+			| info->ceiling.b);
+	aff->f = (0 << 24 | info->ground.r << 16 | info->ground.g << 8
+			| info->ground.b);
 	aff->img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
 	if (!aff->img)
 	{
@@ -84,12 +82,12 @@ int		ft_init_aff(t_aff *aff, t_info *info)
 		free(aff->info->mlx);
 		free(aff->info);
 		free(aff);
-		return(print_error_message(ERRCODE_NEW_IMAGE));
+		return (print_error_message(ERRCODE_NEW_IMAGE));
 	}
 	return (0);
 }
 
-int ft_start(int argc, char **argv, t_info **info, t_aff **aff)
+int	ft_start(int argc, char **argv, t_info **info, t_aff **aff)
 {
 	*info = malloc(sizeof(t_info));
 	if (!*info)

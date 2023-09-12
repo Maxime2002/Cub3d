@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlangloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:30:01 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/11 16:30:02 by mlangloi         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:18:59 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,38 @@
 
 void	ft_render5(t_aff *aff)
 {
-	if (aff->rayDirX < 0)
+	if (aff->ray_dir_x < 0)
 	{
-		aff->stepX = -1;
-		aff->sideDistX = (aff->posX - aff->mapX) * aff->deltaDistX;
+		aff->step_x = -1;
+		aff->side_dist_x = (aff->pos_x - aff->map_x) * aff->delta_dist_x;
 	}
 	else
 	{
-		aff->stepX = 1;
-		aff->sideDistX = (aff->mapX + 1.0 - aff->posX) * aff->deltaDistX;
+		aff->step_x = 1;
+		aff->side_dist_x = (aff->map_x + 1.0 - aff->pos_x) * aff->delta_dist_x;
 	}
-	if (aff->rayDirY < 0)
+	if (aff->ray_dir_y < 0)
 	{
-		aff->stepY = -1;
-		aff->sideDistY = (aff->posY - aff->mapY) * aff->deltaDistY;
+		aff->step_y = -1;
+		aff->side_dist_y = (aff->pos_y - aff->map_y) * aff->delta_dist_y;
 	}
 	else
 	{
-		aff->stepY = 1;
-		aff->sideDistY = (aff->mapY + 1.0 - aff->posY) * aff->deltaDistY;
+		aff->step_y = 1;
+		aff->side_dist_y = (aff->map_y + 1.0 - aff->pos_y) * aff->delta_dist_y;
 	}
 }
 
 void	ft_render2(t_aff *aff)
 {
-	if (aff->rayDirX == 0)
-		aff->deltaDistX = 1e30;
+	if (aff->ray_dir_x == 0)
+		aff->delta_dist_x = 1e30;
 	else
-		aff->deltaDistX = absolute(1 / aff->rayDirX);
-	if (aff->rayDirY == 0)
-		aff->deltaDistY = 1e30;
+		aff->delta_dist_x = absolute(1 / aff->ray_dir_x);
+	if (aff->ray_dir_y == 0)
+		aff->delta_dist_y = 1e30;
 	else
-		aff->deltaDistY = absolute(1 / aff->rayDirY);
+		aff->delta_dist_y = absolute(1 / aff->ray_dir_y);
 	ft_render5(aff);
 }
 
@@ -53,19 +53,19 @@ void	ft_render3(t_aff *aff)
 {
 	while (aff->hit == 0)
 	{
-		if (aff->sideDistX < aff->sideDistY)
+		if (aff->side_dist_x < aff->side_dist_y)
 		{
-			aff->sideDistX += aff->deltaDistX;
-			aff->mapX += aff->stepX;
+			aff->side_dist_x += aff->delta_dist_x;
+			aff->map_x += aff->step_x;
 			aff->side = 0;
 		}
 		else
 		{
-			aff->sideDistY += aff->deltaDistY;
-			aff->mapY += aff->stepY;
+			aff->side_dist_y += aff->delta_dist_y;
+			aff->map_y += aff->step_y;
 			aff->side = 1;
 		}
-		if (aff->info->map[aff->mapX][aff->mapY] == '1')
+		if (aff->info->map[aff->map_x][aff->map_y] == '1')
 			aff->hit = 1;
 	}
 }
@@ -73,16 +73,16 @@ void	ft_render3(t_aff *aff)
 void	ft_render4(t_aff *aff)
 {
 	if (aff->side == 0)
-		aff->perpWallDist = (aff->sideDistX - aff->deltaDistX);
+		aff->perp_wall_dist = (aff->side_dist_x - aff->delta_dist_x);
 	else
-		aff->perpWallDist = (aff->sideDistY - aff->deltaDistY);
-	aff->lineHeight = (int)((double)aff->h / aff->perpWallDist);
-	aff->drawStart = -aff->lineHeight / 2 + (double)aff->h / 2;
-	if (aff->drawStart < 0)
-		aff->drawStart = 0;
-	aff->drawEnd = aff->lineHeight / 2 + (double)aff->h / 2;
-	if (aff->drawEnd >= (double)aff->h)
-		aff->drawEnd = (double)aff->h - 1;
+		aff->perp_wall_dist = (aff->side_dist_y - aff->delta_dist_y);
+	aff->line_height = (int)((double)aff->h / aff->perp_wall_dist);
+	aff->draw_start = -aff->line_height / 2 + (double)aff->h / 2;
+	if (aff->draw_start < 0)
+		aff->draw_start = 0;
+	aff->draw_end = aff->line_height / 2 + (double)aff->h / 2;
+	if (aff->draw_end >= (double)aff->h)
+		aff->draw_end = (double)aff->h - 1;
 }
 
 void	ft_render(t_aff *aff)
@@ -92,11 +92,11 @@ void	ft_render(t_aff *aff)
 	x = 0;
 	while (x < (double)aff->w)
 	{
-		aff->cameraX = 2.0f * (double)x / (double)aff->w - 1.0f;
-		aff->rayDirX = aff->dirX + aff->planX * aff->cameraX;
-		aff->rayDirY = aff->dirY + aff->planY * aff->cameraX;
-		aff->mapX = (int)aff->posX;
-		aff->mapY = (int)aff->posY;
+		aff->camera_x = 2.0f * (double)x / (double)aff->w - 1.0f;
+		aff->ray_dir_x = aff->dir_x + aff->plan_x * aff->camera_x;
+		aff->ray_dir_y = aff->dir_y + aff->plan_y * aff->camera_x;
+		aff->map_x = (int)aff->pos_x;
+		aff->map_y = (int)aff->pos_y;
 		aff->hit = 0;
 		ft_render2(aff);
 		ft_render3(aff);

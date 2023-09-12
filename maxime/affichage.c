@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   affichage.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlangloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:12:09 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/11 18:12:10 by mlangloi         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:12:14 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	ft_draw_texture(t_aff *aff, int x, int y, t_img *texture)
 {
-	y = aff->drawStart - 1;
-	aff->t.step = 1.0 * aff->info->so.h / aff->lineHeight;
+	y = aff->draw_start - 1;
+	aff->t.step = 1.0 * aff->info->so.h / aff->line_height;
 	aff->t.texx = (int)(aff->t.wallx * (double)texture->w);
-	if (aff->side == 0 && aff->rayDirX > 0)
+	if (aff->side == 0 && aff->ray_dir_x > 0)
 		aff->t.texx = texture->w - aff->t.texx - 1;
-	if (aff->side == 1 && aff->rayDirY < 0)
+	if (aff->side == 1 && aff->ray_dir_y < 0)
 		aff->t.texx = texture->w - aff->t.texx - 1;
-	aff->t.texpos = (aff->drawStart - aff->h / 2
-			+ aff->lineHeight / 2) * aff->t.step;
-	while (++y <= aff->drawEnd)
+	aff->t.texpos = (aff->draw_start - aff->h / 2
+			+ aff->line_height / 2) * aff->t.step;
+	while (++y <= aff->draw_end)
 	{
 		aff->t.texy = (int)aff->t.texpos
 			& (texture->h - 1);
@@ -39,19 +39,19 @@ void	ft_draw_texture(t_aff *aff, int x, int y, t_img *texture)
 void	ft_init_texture(t_aff *aff, int x, int y)
 {
 	if (aff->side == 0)
-		aff->t.wallx = aff->posY + aff->perpWallDist \
-						* aff->rayDirY;
+		aff->t.wallx = aff->pos_y + aff->perp_wall_dist \
+						* aff->ray_dir_y;
 	else
-		aff->t.wallx = aff->posX + aff->perpWallDist \
-						* aff->rayDirX;
+		aff->t.wallx = aff->pos_x + aff->perp_wall_dist \
+						* aff->ray_dir_x;
 	aff->t.wallx -= floor((aff->t.wallx));
-	if (aff->side == 0 && aff->rayDirX < 0)
+	if (aff->side == 0 && aff->ray_dir_x < 0)
 		ft_draw_texture(aff, x, y, &aff->info->so);
-	if (aff->side == 0 && aff->rayDirX >= 0)
+	if (aff->side == 0 && aff->ray_dir_x >= 0)
 		ft_draw_texture(aff, x, y, &aff->info->no);
-	if (aff->side == 1 && aff->rayDirY < 0)
+	if (aff->side == 1 && aff->ray_dir_y < 0)
 		ft_draw_texture(aff, x, y, &aff->info->ea);
-	if (aff->side == 1 && aff->rayDirY >= 0)
+	if (aff->side == 1 && aff->ray_dir_y >= 0)
 		ft_draw_texture(aff, x, y, &aff->info->we);
 }
 
@@ -61,12 +61,12 @@ int	ft_color_column(t_aff *aff, int x)
 	int	i;
 
 	j = -1;
-	aff->drawEnd = aff->h - aff->drawStart;
-	i = aff->drawEnd;
-	while (++j < aff->drawStart)
+	aff->draw_end = aff->h - aff->draw_start;
+	i = aff->draw_end;
+	while (++j < aff->draw_start)
 		aff->addr[j * aff->line_length / 4
 			+ x] = aff->c;
-	if (j <= aff->drawEnd)
+	if (j <= aff->draw_end)
 		ft_init_texture(aff, x, j);
 	j = i;
 	while (++j < aff->h)
