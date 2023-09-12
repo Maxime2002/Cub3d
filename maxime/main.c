@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:56:48 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/11 19:40:15 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 14:24:33 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,32 @@ int	ft_controls(int touche, t_aff *aff)
 	return (0);
 }
 
+int ft_mouse_move(int x, int y, t_aff *aff)
+{
+	if (x > WIDTH / 2)
+	{
+		double oldDirX = aff->dirX;
+	      	aff->dirX = aff->dirX * cos(-(0.033 * 1.8) / 2) - aff->dirY * sin(-(0.033 * 1.8) / 2);
+	      	aff->dirY = oldDirX * sin(-(0.033 * 1.8) / 2) + aff->dirY * cos(-(0.033 * 1.8) / 2);
+		double oldPlaneX = aff->planX;
+		aff->planX = aff->planX * cos(-(0.033 * 1.8) / 2) - aff->planY * sin(-(0.033 * 1.8) / 2);
+		aff->planY = oldPlaneX * sin(-(0.033 * 1.8) / 2) + aff->planY * cos(-(0.033 * 1.8) / 2);
+	}
+	else if (x < WIDTH / 2)
+	{
+		double oldDirX = aff->dirX;
+	      	aff->dirX = aff->dirX * cos((0.033 * 1.8) / 2) - aff->dirY * sin((0.033 * 1.8) / 2);
+	      	aff->dirY = oldDirX * sin((0.033 * 1.8) / 2) + aff->dirY * cos((0.033 * 1.8) / 2);
+		double oldPlaneX = aff->planX;
+		aff->planX = aff->planX * cos((0.033 * 1.8) / 2) - aff->planY * sin((0.033 * 1.8) / 2);
+		aff->planY = oldPlaneX * sin((0.033 * 1.8) / 2) + aff->planY * cos((0.033 * 1.8) / 2);
+	}
+	x = WIDTH / 2;
+	y = HEIGHT / 2;
+	mlx_mouse_move(aff->info->mlx, aff->info->win, x, y);
+	return (0);
+}
+
 int main (int argc, char **argv)
 {
 	t_info*info;
@@ -97,7 +123,9 @@ int main (int argc, char **argv)
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "cub3d");
 	if (!info->win)
 		return (ft_exit(aff));
-	mlx_key_hook(info->win, ft_controls, aff);
+	mlx_mouse_hide(info->mlx, info->win); // cache la souris
+	mlx_hook(info->win, 6, (1L<<6), ft_mouse_move, aff);
+	mlx_hook(info->win, 2, 1, ft_controls, aff);
 	ft_texture(aff);
 	aff->addr = (int *)mlx_get_data_addr(aff->img, &aff->
 			bpp, &aff->line_length, &aff->endian);
