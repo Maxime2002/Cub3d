@@ -47,6 +47,11 @@ void	ft_init_texture(t_aff *aff, int x, int y)
 	aff->t.wallx -= floor((aff->t.wallx));
 	if (aff->let == 'P')
 		ft_draw_texture(aff, x, y, &aff->info->door);
+<<<<<<< HEAD
+	/*if (aff->let == 'S')
+		ft_sprites(aff, x, y);*/
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 	else if (aff->side == 0 && aff->ray_dir_x < 0)
 		ft_draw_texture(aff, x, y, &aff->info->so);
 	else if (aff->side == 0 && aff->ray_dir_x >= 0)
@@ -94,4 +99,8 @@ void	ft_texture(t_aff *aff)
 	aff->info->door.addr = (int *)mlx_get_data_addr(aff->info->door.img,
 			&aff->info->door.bpp,
 			&aff->info->door.line_length, &aff->info->door.endian);
+<<<<<<< HEAD
+	ft_init_sprites(aff);
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 }

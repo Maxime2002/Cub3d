@@ -103,6 +103,17 @@ typedef struct s_info
 	t_img		we;
 	t_img		ea;
 	t_img		door;
+<<<<<<< HEAD
+	t_img		r;
+	t_img		s;
+	t_img		sp;
+	t_img		spr;
+	t_img		spri;
+	t_img		sprit;
+	t_img		sprite;
+	t_img		sprites;
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 	t_color		ceiling;
 	t_color		ground;
 
@@ -155,6 +166,10 @@ typedef struct s_aff
 	int			c;
 	int			f;
 	char		let;
+<<<<<<< HEAD
+	int			count;
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 }				t_aff;
 
 /* ==================== function parsing ==================== */
@@ -216,5 +231,13 @@ void			ft_gauche(t_aff *aff);
 int				ft_controls(int touche, t_aff *aff);
 void			ft_avancer_reculer(int touche, t_aff *aff);
 void			ft_droite_gauche(int touche, t_aff *aff);
+<<<<<<< HEAD
+
+/* ==================== function sprites ==================== */
+
+void			ft_init_sprites(t_aff *aff);
+//void			ft_sprites(t_aff *aff, int x, int y);
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 
 #endif

@@ -26,6 +26,10 @@ SRCS	=	main.c	\
 			affichage.c \
 			ft_controls.c \
 			ft_controls2.c \
+<<<<<<< HEAD
+			ft_sprites.c \
+=======
+>>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 
 OBJ =	${SRCS:.c=.o}
 
