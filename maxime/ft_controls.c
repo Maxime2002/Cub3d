@@ -46,25 +46,38 @@ void	ft_gauche(t_aff *aff)
 		* cos((0.033 * 1.8) / 2);
 }
 
+void	ft_reculer(t_aff *aff)
+{
+	if (aff->info->map[(int)(aff->pos_x - (aff->dir_x
+				* 0.1 * 2))][(int)(aff->pos_y)] == '0' ||
+			aff->info->map[(int)(aff->pos_x - (aff->dir_x
+			* 0.1 * 2))][(int)(aff->pos_y)] == 'z')
+		aff->pos_x -= aff->dir_x * 0.1;
+	if (aff->info->map[(int)(aff->pos_x)][(int)(aff->pos_y
+			- (aff->dir_y * 0.1 * 2))] == '0' ||
+		aff->info->map[(int)(aff->pos_x)][(int)(aff->pos_y
+			- (aff->dir_y * 0.1 * 2))] == 'z')
+		aff->pos_y -= aff->dir_y * 0.1;
+}
+
 void	ft_avancer_reculer(int touche, t_aff *aff)
 {
 	if (touche == 119)
 	{
 		if (aff->info->map[(int)(aff->pos_x + (aff->dir_x
-					* 0.1 * 2))][(int)aff->pos_y] != '1')
+					* 0.1 * 2))][(int)aff->pos_y] == '0' ||
+		aff->info->map[(int)(aff->pos_x + (aff->dir_x
+					* 0.1 * 2))][(int)aff->pos_y] == 'z')
 			aff->pos_x += aff->dir_x * 0.1;
 		if (aff->info->map[(int)(aff->pos_x)][(int)(aff->pos_y
-				+ (aff->dir_y * 0.1 * 2))] != '1')
+				+ (aff->dir_y * 0.1 * 2))] == '0' ||
+			aff->info->map[(int)(aff->pos_x)][(int)(aff->pos_y
+				+ (aff->dir_y * 0.1 * 2))] == 'z')
 			aff->pos_y += aff->dir_y * 0.1;
 	}
 	if (touche == 115)
 	{
-		if (aff->info->map[(int)(aff->pos_x - (aff->dir_x
-					* 0.1 * 2))][(int)(aff->pos_y)] != '1')
-			aff->pos_x -= aff->dir_x * 0.1;
-		if (aff->info->map[(int)(aff->pos_x)][(int)(aff->pos_y
-				- (aff->dir_y * 0.1 * 2))] != '1')
-			aff->pos_y -= aff->dir_y * 0.1;
+		ft_reculer(aff);
 	}
 }
 
@@ -73,10 +86,10 @@ void	ft_droite_gauche(int touche, t_aff *aff)
 	if (touche == 100)
 	{
 		if (aff->info->map[(int)(aff->pos_x + aff->dir_y * (0.1
-					* 2))][(int)aff->pos_y] != '1')
+					* 2))][(int)aff->pos_y] == '0')
 			aff->pos_x += aff->dir_y * 0.1;
 		if (aff->info->map[(int)aff->pos_x][(int)(aff->pos_y - aff->dir_x
-			* (0.1 * 2))] != '1')
+			* (0.1 * 2))] == '0')
 			aff->pos_y -= aff->dir_x * 0.1;
 	}
 	if (touche == 97)
@@ -88,17 +101,4 @@ void	ft_droite_gauche(int touche, t_aff *aff)
 			+ aff->dir_x * (0.1 * 2))] != '1')
 			aff->pos_y += aff->dir_x * 0.1;
 	}
-}
-
-int	ft_controls(int touche, t_aff *aff)
-{
-	if (touche == 65363)
-		ft_droite(aff);
-	if (touche == 65361)
-		ft_gauche(aff);
-	ft_avancer_reculer(touche, aff);
-	ft_droite_gauche(touche, aff);
-	if (touche == 65307)
-		ft_exit(aff);
-	return (0);
 }

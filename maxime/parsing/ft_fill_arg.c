@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:19:55 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:23:21 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:54:42 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ int	ft_fill_arg(char *line, t_info *info)
 		return (ft_charg_img(&info->we, line, info));
 	else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
 		return (ft_charg_img(&info->ea, line, info));
+	else if (line[0] == 'D' && line[1] == ' ')
+		return (ft_charg_img(&info->door, line, info));
 	else if (line[0] == 'F' && line[1] == ' ')
 		return (ft_charg_color(&info->ground, line));
 	else if (line[0] == 'C' && line[1] == ' ')
 		return (ft_charg_color(&info->ceiling, line));
 	free(line);
 	if (!info->no.img || !info->so.img || !info->we.img || !info->ea.img
-		|| info->ceiling.b == -1 || info->ground.b == -1)
+		|| !info->door.img || info->ceiling.b == -1 || info->ground.b == -1)
 		return (print_error_message(ERRCODE_LINE));
 	return (-1);
 }

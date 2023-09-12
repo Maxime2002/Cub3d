@@ -57,6 +57,8 @@
 # define ERRMSG_MLX "Error\nWhen initializing the minilibx.\n"
 # define ERRCODE_NEW_IMAGE 16
 # define ERRMSG_NEW_IMAGE "Error\nCreating main image.\n"
+# define ERRCODE_SAME_LINE 17
+# define ERRMSG_SAME_LINE "Error\nSame line in file.\n"
 
 /* ==================== include ==================== */
 
@@ -69,7 +71,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-/* ==================== structure ==================== */
+/* ==================== structure   ==================== */
 
 typedef struct s_color
 {
@@ -100,7 +102,7 @@ typedef struct s_info
 	t_img		so;
 	t_img		we;
 	t_img		ea;
-
+	t_img		door;
 	t_color		ceiling;
 	t_color		ground;
 
@@ -152,6 +154,7 @@ typedef struct s_aff
 	t_texture	t;
 	int			c;
 	int			f;
+	char		let;
 }				t_aff;
 
 /* ==================== function parsing ==================== */
@@ -211,5 +214,7 @@ void			ft_texture(t_aff *aff);
 void			ft_droite(t_aff *aff);
 void			ft_gauche(t_aff *aff);
 int				ft_controls(int touche, t_aff *aff);
+void			ft_avancer_reculer(int touche, t_aff *aff);
+void			ft_droite_gauche(int touche, t_aff *aff);
 
 #endif

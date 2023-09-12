@@ -39,19 +39,21 @@ void	ft_draw_texture(t_aff *aff, int x, int y, t_img *texture)
 void	ft_init_texture(t_aff *aff, int x, int y)
 {
 	if (aff->side == 0)
-		aff->t.wallx = aff->pos_y + aff->perp_wall_dist \
-						* aff->ray_dir_y;
+		aff->t.wallx = aff->pos_y + aff->perp_wall_dist
+			* aff->ray_dir_y;
 	else
-		aff->t.wallx = aff->pos_x + aff->perp_wall_dist \
-						* aff->ray_dir_x;
+		aff->t.wallx = aff->pos_x + aff->perp_wall_dist
+			* aff->ray_dir_x;
 	aff->t.wallx -= floor((aff->t.wallx));
-	if (aff->side == 0 && aff->ray_dir_x < 0)
+	if (aff->let == 'P')
+		ft_draw_texture(aff, x, y, &aff->info->door);
+	else if (aff->side == 0 && aff->ray_dir_x < 0)
 		ft_draw_texture(aff, x, y, &aff->info->so);
-	if (aff->side == 0 && aff->ray_dir_x >= 0)
+	else if (aff->side == 0 && aff->ray_dir_x >= 0)
 		ft_draw_texture(aff, x, y, &aff->info->no);
-	if (aff->side == 1 && aff->ray_dir_y < 0)
+	else if (aff->side == 1 && aff->ray_dir_y < 0)
 		ft_draw_texture(aff, x, y, &aff->info->ea);
-	if (aff->side == 1 && aff->ray_dir_y >= 0)
+	else if (aff->side == 1 && aff->ray_dir_y >= 0)
 		ft_draw_texture(aff, x, y, &aff->info->we);
 }
 
@@ -89,4 +91,7 @@ void	ft_texture(t_aff *aff)
 	aff->info->ea.addr = (int *)mlx_get_data_addr(aff->info->ea.img,
 			&aff->info->ea.bpp,
 			&aff->info->ea.line_length, &aff->info->ea.endian);
+	aff->info->door.addr = (int *)mlx_get_data_addr(aff->info->door.img,
+			&aff->info->door.bpp,
+			&aff->info->door.line_length, &aff->info->door.endian);
 }

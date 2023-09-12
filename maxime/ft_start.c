@@ -56,6 +56,7 @@ void	spawn_player(t_aff *aff)
 	aff->pos_x += i;
 	aff->pos_y += j;
 	spawn_dir(aff, aff->info->map[i][j]);
+	aff->info->map[i][j] = '0';
 }
 
 int	ft_init_aff(t_aff *aff, t_info *info)

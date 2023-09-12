@@ -66,7 +66,15 @@ void	ft_render3(t_aff *aff)
 			aff->side = 1;
 		}
 		if (aff->info->map[aff->map_x][aff->map_y] == '1')
+		{
 			aff->hit = 1;
+			aff->let = '1';
+		}
+		if (aff->info->map[aff->map_x][aff->map_y] == 'P')
+		{
+			aff->hit = 1;
+			aff->let = 'P';
+		}
 	}
 }
 
@@ -98,6 +106,7 @@ void	ft_render(t_aff *aff)
 		aff->map_x = (int)aff->pos_x;
 		aff->map_y = (int)aff->pos_y;
 		aff->hit = 0;
+		aff->let = '0';
 		ft_render2(aff);
 		ft_render3(aff);
 		ft_render4(aff);

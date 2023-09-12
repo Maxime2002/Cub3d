@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:44:37 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:23:13 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:47:56 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ int	ft_charg_color(t_color *color, char *line)
 	i = 1;
 	while (line[i] == ' ')
 		i++;
+	if (color->b != -1)
+	{
+		free(line);
+		return (-1);
+	}
 	color->r = ft_verif_size_color(line, i);
 	if (color->r == -1)
 		return (1);
@@ -90,6 +95,11 @@ int	ft_charg_img(t_img *img, char *line, t_info *info)
 	i = 2;
 	while (line[i] == ' ')
 		i++;
+	if (img->img)
+	{
+		free(line);
+		return (print_error_message(ERRCODE_SAME_LINE));
+	}
 	img->img = mlx_xpm_file_to_image(info->mlx, line + i, &img->w, &img->h);
 	free(line);
 	if (!img->img)
