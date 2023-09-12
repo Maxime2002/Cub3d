@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:14:44 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:04:47 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:54:33 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_init_value(t_info *info)
 {
+	info->door.img = NULL;
 	info->no.img = NULL;
 	info->so.img = NULL;
 	info->we.img = NULL;

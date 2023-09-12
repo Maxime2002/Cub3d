@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 18:59:25 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:23:54 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:50:17 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_free_img(t_info *info)
 {
+	if (info->door.img != NULL)
+		mlx_destroy_image(info->mlx, info->door.img);
 	if (info->no.img != NULL)
 		mlx_destroy_image(info->mlx, info->no.img);
 	if (info->so.img != NULL)

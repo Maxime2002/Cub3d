@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:05:50 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:23:51 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:48:46 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	print_error_message2(int error_code)
 		ft_print_error(ERRMSG_PLAYEUR_MAP);
 	else if (error_code == ERRCODE_INVALID_MAP)
 		ft_print_error(ERRMSG_INVALID_MAP);
+	else if (error_code == ERRCODE_SAME_LINE)
+		ft_print_error(ERRMSG_SAME_LINE);
 	return (1);
 }
 

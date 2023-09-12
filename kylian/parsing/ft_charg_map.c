@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:31:24 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 14:54:42 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/12 15:14:09 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	ft_charg_map(t_info *info, char *dest, int i)
 		i++;
 	if (!dest[i])
 		return (print_error_message(ERRCODE_MAP_VOID));
-	info->map = malloc(sizeof(char *) * (ft_count_nb_char(dest + i, '\n') + 1));
+	info->map = malloc(sizeof(char *) * (ft_count_nb_char(dest
+					+ i, '\n') + 2));
 	if (!info->map)
 		return (print_error_message(ERRCODE_MALLOC));
 	j = 0;
