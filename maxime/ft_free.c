@@ -12,6 +12,26 @@
 
 #include "cub3d.h"
 
+void	ft_free_img_sprites(t_info *info)
+{
+	if (info->r.img != NULL)
+		mlx_destroy_image(info->mlx, info->r.img);
+	if (info->s.img != NULL)
+		mlx_destroy_image(info->mlx, info->s.img);
+	if (info->sp.img != NULL)
+		mlx_destroy_image(info->mlx, info->sp.img);
+	if (info->spr.img != NULL)
+		mlx_destroy_image(info->mlx, info->spr.img);
+	if (info->spri.img != NULL)
+		mlx_destroy_image(info->mlx, info->spri.img);
+	if (info->sprit.img != NULL)
+		mlx_destroy_image(info->mlx, info->sprit.img);
+	if (info->sprite.img != NULL)
+		mlx_destroy_image(info->mlx, info->sprite.img);
+	if (info->sprites.img != NULL)
+		mlx_destroy_image(info->mlx, info->sprites.img);
+}
+
 int	ft_free_img(t_info *info)
 {
 	if (info->no.img != NULL)
@@ -22,6 +42,9 @@ int	ft_free_img(t_info *info)
 		mlx_destroy_image(info->mlx, info->we.img);
 	if (info->ea.img != NULL)
 		mlx_destroy_image(info->mlx, info->ea.img);
+	if (info->door.img != NULL)
+		mlx_destroy_image(info->mlx, info->door.img);
+	ft_free_img_sprites(info);
 	return (1);
 }
 

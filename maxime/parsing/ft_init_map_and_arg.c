@@ -14,6 +14,14 @@
 
 void	ft_init_value(t_info *info)
 {
+	info->r.img = NULL;
+	info->s.img = NULL;
+	info->sp.img = NULL;
+	info->spr.img = NULL;
+	info->spri.img = NULL;
+	info->sprit.img = NULL;
+	info->sprite.img = NULL;
+	info->sprites.img = NULL;
 	info->door.img = NULL;
 	info->no.img = NULL;
 	info->so.img = NULL;

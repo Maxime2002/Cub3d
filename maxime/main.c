@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "cub3d");
 	if (!info->win)
 		return (ft_exit(aff));
-	mlx_mouse_hide(info->mlx, info->win);
+	//mlx_mouse_hide(info->mlx, info->win);
 	mlx_hook(info->win, 6, (1L << 6), ft_mouse_move, aff);
 	mlx_hook(info->win, 2, 1, ft_controls, aff);
 	aff->count = 0;

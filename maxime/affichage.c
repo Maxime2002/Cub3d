@@ -96,5 +96,5 @@ void	ft_texture(t_aff *aff)
 	aff->info->door.addr = (int *)mlx_get_data_addr(aff->info->door.img,
 			&aff->info->door.bpp,
 			&aff->info->door.line_length, &aff->info->door.endian);
-	ft_init_sprites(aff);
+	//ft_init_sprites(aff);
 }
