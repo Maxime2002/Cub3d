@@ -86,19 +86,25 @@ void	ft_droite_gauche(int touche, t_aff *aff)
 	if (touche == 100)
 	{
 		if (aff->info->map[(int)(aff->pos_x + aff->dir_y * (0.1
-					* 2))][(int)aff->pos_y] == '0')
+					* 2))][(int)aff->pos_y] == '0' ||
+				aff->info->map[(int)(aff->pos_x + aff->dir_y * (0.1
+					* 2))][(int)aff->pos_y] == 'z')
 			aff->pos_x += aff->dir_y * 0.1;
 		if (aff->info->map[(int)aff->pos_x][(int)(aff->pos_y - aff->dir_x
-			* (0.1 * 2))] == '0')
+			* (0.1 * 2))] == '0' || aff->info->map[(int)aff->pos_x]
+				[(int)(aff->pos_y - aff->dir_x * (0.1 * 2))] == 'z')
 			aff->pos_y -= aff->dir_x * 0.1;
 	}
 	if (touche == 97)
 	{
 		if (aff->info->map[(int)(aff->pos_x - aff->dir_y
-				* (0.1 * 2))][(int)aff->pos_y] != '1')
+				* (0.1 * 2))][(int)aff->pos_y] == '0' ||
+				aff->info->map[(int)(aff->pos_x - aff->dir_y
+				* (0.1 * 2))][(int)aff->pos_y] == 'z')
 			aff->pos_x -= aff->dir_y * 0.1;
 		if (aff->info->map[(int)aff->pos_x][(int)(aff->pos_y
-			+ aff->dir_x * (0.1 * 2))] != '1')
+			+ aff->dir_x * (0.1 * 2))] == '0' || aff->info->map[(int)aff->pos_x]
+				[(int)(aff->pos_y + aff->dir_x * (0.1 * 2))] == 'z')
 			aff->pos_y += aff->dir_x * 0.1;
 	}
 }
