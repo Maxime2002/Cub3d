@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/12 15:18:59 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/13 16:56:30 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void			ft_render(t_aff *aff);
 int				ft_color_column(t_aff *aff, int x);
 void			ft_texture(t_aff *aff);
 void			ft_draw_texture(t_aff *aff, int x, int y, t_img *texture);
-
+void			ft_mini_map(t_aff *aff);
 /* ==================== function controls ==================== */
 
 void			ft_droite(t_aff *aff);

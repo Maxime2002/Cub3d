@@ -27,6 +27,7 @@ SRCS	=	main.c	\
 			ft_controls.c \
 			ft_controls2.c \
 			ft_sprites.c \
+			ft_mini_map.c
 
 OBJ =	${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:30:01 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/12 15:18:59 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/13 16:35:37 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ void	ft_render(t_aff *aff)
 		ft_color_column(aff, x);
 		x++;
 	}
+	ft_mini_map(aff);
 	mlx_put_image_to_window(aff->info->mlx, aff->info->win, aff->img, 0, 0);
 }
