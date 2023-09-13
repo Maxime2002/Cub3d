@@ -6,15 +6,15 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:36:02 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/13 18:31:30 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/13 18:37:03 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void ft_print_cub(t_aff *aff, int pos, int color)
+void	ft_print_cub(t_aff *aff, int pos, int color)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 5)
@@ -28,10 +28,10 @@ void ft_print_cub(t_aff *aff, int pos, int color)
 	}
 }
 
-void ft_affi_cub(t_aff *aff, int color, int reset)
+void	ft_affi_cub(t_aff *aff, int color, int reset)
 {
-	static int i = 0;
-	static int j = 0;
+	static int	i = 0;
+	static int	j = 0;
 
 	if (reset == 1)
 	{
@@ -39,7 +39,7 @@ void ft_affi_cub(t_aff *aff, int color, int reset)
 		j = 0;
 		return ;
 	}
-	ft_print_cub(aff , i + j,color);
+	ft_print_cub(aff, i + j, color);
 	i += 5;
 	if (i >= 55)
 	{
@@ -48,9 +48,9 @@ void ft_affi_cub(t_aff *aff, int color, int reset)
 	}
 }
 
-void ft_mini_map2(t_aff *aff, int x, int y)
+void	ft_mini_map2(t_aff *aff, int x, int y)
 {
-	while(x < (int)aff->pos_y + 6)
+	while (x < (int)aff->pos_y + 6)
 	{
 		if (x < 0)
 			ft_affi_cub(aff, 0xFFFFFFF, 0);
@@ -67,10 +67,11 @@ void ft_mini_map2(t_aff *aff, int x, int y)
 	}
 }
 
-void ft_finish_y(t_aff *aff, int y)
+void	ft_finish_y(t_aff *aff, int y)
 {
-	int j;
-	while(y < (int)aff->pos_x + 6)
+	int	j;
+
+	while (y < (int)aff->pos_x + 6)
 	{
 		j = 0;
 		while (j < 11)
@@ -80,14 +81,14 @@ void ft_finish_y(t_aff *aff, int y)
 		}
 		y++;
 	}
-	ft_print_cub(aff, (25 + (5 * (5 * WIDTH))),0x800080);
+	ft_print_cub(aff, (25 + (5 * (5 * WIDTH))), 0x800080);
 	ft_affi_cub(aff, 0x000000, 1);
 }
 
-void ft_mini_map(t_aff *aff)
+void	ft_mini_map(t_aff *aff)
 {
-	int y;
-	int j;
+	int	y;
+	int	j;
 
 	y = (int)aff->pos_x - 5;
 	while (y < (int)aff->pos_x + 5)
@@ -107,6 +108,6 @@ void ft_mini_map(t_aff *aff)
 			ft_mini_map2(aff, (int)aff->pos_y - 5, y);
 		y++;
 	}
-	ft_print_cub(aff, (25 + (5 * (5 * WIDTH))),0x800080);
+	ft_print_cub(aff, (25 + (5 * (5 * WIDTH))), 0x800080);
 	ft_affi_cub(aff, 0x000000, 1);
 }
