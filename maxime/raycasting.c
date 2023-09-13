@@ -67,7 +67,6 @@ void	ft_render3(t_aff *aff)
 		}
 		if (aff->info->map[aff->map_x][aff->map_y] == '1')
 		{
-<<<<<<< HEAD
 			aff->hit = 1;
 			aff->let = '1';
 		}
@@ -80,7 +79,6 @@ void	ft_render3(t_aff *aff)
 		{
 			aff->hit = 1;
 			aff->let = 'S';
-=======
 			aff->hit = 1;
 			aff->let = '1';
 		}
@@ -88,7 +86,6 @@ void	ft_render3(t_aff *aff)
 		{
 			aff->hit = 1;
 			aff->let = 'P';
->>>>>>> 9239d653434ec16f8bfa6fe5328afa845ec1b6f6
 		}
 	}
 }
