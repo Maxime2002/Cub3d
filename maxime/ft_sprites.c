@@ -12,6 +12,25 @@
 
 #include "cub3d.h"
 
+void	ft_lettre(t_aff *aff)
+{
+	if (aff->info->map[aff->map_x][aff->map_y] == '1')
+	{
+		aff->hit = 1;
+		aff->let = '1';
+	}
+	if (aff->info->map[aff->map_x][aff->map_y] == 'P')
+	{
+		aff->hit = 1;
+		aff->let = 'P';
+	}
+	if (aff->info->map[aff->map_x][aff->map_y] == 'S')
+	{
+		aff->hit = 1;
+		aff->let = 'S';
+	}
+}
+
 void	ft_init_sprites2(t_aff *aff)
 {
 	aff->info->r.addr = (int *)mlx_get_data_addr(aff->info->r.img,
@@ -44,20 +63,21 @@ void	ft_init_sprites(t_aff *aff)
 {
 	aff->info->r.img = mlx_xpm_file_to_image(aff->info->mlx,
 			"./asset/r.xpm", &aff->info->r.w, &aff->info->r.w);
-	aff->info->s.img = mlx_xpm_file_to_image(aff->info->mlx,	
-			"./asset/S.xpm", &aff->info->s.w, &aff->info->s.w);	
+	aff->info->s.img = mlx_xpm_file_to_image(aff->info->mlx,
+			"./asset/S.xpm", &aff->info->s.w, &aff->info->s.w);
 	aff->info->sp.img = mlx_xpm_file_to_image(aff->info->mlx,
 			"./asset/Sp.xpm", &aff->info->sp.w, &aff->info->sp.w);
 	aff->info->spr.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.w);	
+			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.w);
 	aff->info->spri.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.w);		
+			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.w);
 	aff->info->sprit.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprit.xpm", &aff->info->sprit.w, &aff->info->sprit.w);		
+			"./asset/Sprit.xpm", &aff->info->sprit.w, &aff->info->sprit.w);
 	aff->info->sprite.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprite.xpm", &aff->info->sprite.w, &aff->info->sprite.w);				
+			"./asset/Sprite.xpm", &aff->info->sprite.w, &aff->info->sprite.w);
 	aff->info->sprites.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprites.xpm", &aff->info->sprites.w, &aff->info->sprites.w);
+			"./asset/Sprites.xpm", &aff->info->sprites.w,
+			&aff->info->sprites.w);
 	ft_init_sprites2(aff);
 }
 

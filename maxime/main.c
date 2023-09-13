@@ -62,6 +62,7 @@ int	main(int argc, char **argv)
 	mlx_mouse_hide(info->mlx, info->win);
 	mlx_hook(info->win, 6, (1L << 6), ft_mouse_move, aff);
 	mlx_hook(info->win, 2, 1, ft_controls, aff);
+	aff->count = 0;
 	ft_texture(aff);
 	aff->addr = (int *)mlx_get_data_addr(aff->img, &aff->bpp,
 			&aff->line_length, &aff->endian);

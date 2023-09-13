@@ -228,8 +228,8 @@ void			ft_droite_gauche(int touche, t_aff *aff);
 
 /* ==================== function sprites ==================== */
 
+void			ft_lettre(t_aff *aff);
 void			ft_init_sprites(t_aff *aff);
 //void			ft_sprites(t_aff *aff, int x, int y);
-
 
 #endif

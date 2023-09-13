@@ -65,28 +65,7 @@ void	ft_render3(t_aff *aff)
 			aff->map_y += aff->step_y;
 			aff->side = 1;
 		}
-		if (aff->info->map[aff->map_x][aff->map_y] == '1')
-		{
-			aff->hit = 1;
-			aff->let = '1';
-		}
-		if (aff->info->map[aff->map_x][aff->map_y] == 'P')
-		{
-			aff->hit = 1;
-			aff->let = 'P';
-		}
-		if (aff->info->map[aff->map_x][aff->map_y] == 'S')
-		{
-			aff->hit = 1;
-			aff->let = 'S';
-			aff->hit = 1;
-			aff->let = '1';
-		}
-		if (aff->info->map[aff->map_x][aff->map_y] == 'P')
-		{
-			aff->hit = 1;
-			aff->let = 'P';
-		}
+		ft_lettre(aff);
 	}
 }
 

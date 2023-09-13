@@ -61,7 +61,6 @@ void	spawn_player(t_aff *aff)
 
 int	ft_init_aff(t_aff *aff, t_info *info)
 {
-	aff->count = 0;
 	aff->plan_x = 0;
 	aff->plan_y = 0;
 	aff->dir_x = 0;
