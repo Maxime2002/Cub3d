@@ -51,7 +51,8 @@ int	ft_verif_map(t_info *info)
 				|| info->map[i][j] == 'E' || info->map[i][j] == 'W')
 				count_playeur++;
 			else if (info->map[i][j] != ' ' && info->map[i][j] != '1'
-				&& info->map[i][j] != '0' && info->map[i][j] != 'P')
+				&& info->map[i][j] != '0' && info->map[i][j] != 'P'
+				&& info->map[i][j] != 'X')
 				return (print_error_message(ERRCODE_CHAR_MAP));
 		}
 		i++;

@@ -47,7 +47,7 @@ void	ft_init_texture(t_aff *aff, int x, int y)
 	aff->t.wallx -= floor((aff->t.wallx));
 	if (aff->let == 'P')
 		ft_draw_texture(aff, x, y, &aff->info->door);
-	/*if (aff->let == 'S')
+	/*if (aff->let == 'X')
 		ft_sprites(aff, x, y);*/
 	else if (aff->side == 0 && aff->ray_dir_x < 0)
 		ft_draw_texture(aff, x, y, &aff->info->so);

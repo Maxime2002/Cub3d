@@ -24,10 +24,10 @@ void	ft_lettre(t_aff *aff)
 		aff->hit = 1;
 		aff->let = 'P';
 	}
-	if (aff->info->map[aff->map_x][aff->map_y] == 'S')
+	if (aff->info->map[aff->map_x][aff->map_y] == 'X')
 	{
 		aff->hit = 1;
-		aff->let = 'S';
+		aff->let = 'X';
 	}
 }
 
