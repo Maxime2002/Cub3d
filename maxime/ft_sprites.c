@@ -62,22 +62,22 @@ void	ft_init_sprites2(t_aff *aff)
 void	ft_init_sprites(t_aff *aff)
 {
 	aff->info->r.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/r.xpm", &aff->info->r.w, &aff->info->r.w);
+			"./asset/r.xpm", &aff->info->r.w, &aff->info->r.h);
 	aff->info->s.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/S.xpm", &aff->info->s.w, &aff->info->s.w);
+			"./asset/S.xpm", &aff->info->s.w, &aff->info->s.h);
 	aff->info->sp.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sp.xpm", &aff->info->sp.w, &aff->info->sp.w);
+			"./asset/Sp.xpm", &aff->info->sp.w, &aff->info->sp.h);
 	aff->info->spr.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.w);
+			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.h);
 	aff->info->spri.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.w);
+			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.h);
 	aff->info->sprit.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprit.xpm", &aff->info->sprit.w, &aff->info->sprit.w);
+			"./asset/Sprit.xpm", &aff->info->sprit.w, &aff->info->sprit.h);
 	aff->info->sprite.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprite.xpm", &aff->info->sprite.w, &aff->info->sprite.w);
+			"./asset/Sprite.xpm", &aff->info->sprite.w, &aff->info->sprite.h);
 	aff->info->sprites.img = mlx_xpm_file_to_image(aff->info->mlx,
 			"./asset/Sprites.xpm", &aff->info->sprites.w,
-			&aff->info->sprites.w);
+			&aff->info->sprites.h);
 	ft_init_sprites2(aff);
 }
 
