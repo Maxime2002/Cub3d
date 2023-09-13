@@ -81,7 +81,7 @@ void	ft_init_sprites(t_aff *aff)
 	ft_init_sprites2(aff);
 }
 
-/*
+
 void	ft_sprites(t_aff *aff, int x, int y)
 {
 	if (aff->count <= 10000)
@@ -103,4 +103,4 @@ void	ft_sprites(t_aff *aff, int x, int y)
 	aff->count++;
 	if (aff->count == 80001)
 		aff->count = 0;
-}*/
+}

@@ -217,6 +217,7 @@ int				ft_exit(t_aff *aff);
 void			ft_render(t_aff *aff);
 int				ft_color_column(t_aff *aff, int x);
 void			ft_texture(t_aff *aff);
+void			ft_draw_texture(t_aff *aff, int x, int y, t_img *texture);
 
 /* ==================== function controls ==================== */
 
@@ -230,6 +231,6 @@ void			ft_droite_gauche(int touche, t_aff *aff);
 
 void			ft_lettre(t_aff *aff);
 void			ft_init_sprites(t_aff *aff);
-//void			ft_sprites(t_aff *aff, int x, int y);
+void			ft_sprites(t_aff *aff, int x, int y);
 
 #endif
