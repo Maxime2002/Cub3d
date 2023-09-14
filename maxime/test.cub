@@ -1,7 +1,7 @@
-NO ./asset/CapyAD5.xpm
-SO ./asset/B1.xpm
-WE ./asset/DB.xpm
-EA ./asset/Dungeon_Bricks1.xpm
+NO ./asset/W1.xpm
+SO ./asset/W2.xpm
+WE ./asset/W3.xpm
+EA ./asset/W4.xpm
 D ./asset/door.xpm
 
 F 220,100,0
