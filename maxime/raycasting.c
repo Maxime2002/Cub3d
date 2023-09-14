@@ -89,6 +89,9 @@ void	ft_render(t_aff *aff)
 	int	x;
 
 	x = 0;
+	aff->count++;
+	if (aff->count >= 5001)
+		aff->count = 0;
 	while (x < (double)aff->w)
 	{
 		aff->camera_x = 2.0f * (double)x / (double)aff->w - 1.0f;

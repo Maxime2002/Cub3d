@@ -67,17 +67,14 @@ void	ft_init_sprites(t_aff *aff)
 
 void	ft_sprites(t_aff *aff, int x, int y)
 {
-	if (aff->count <= 100000)
+	if (aff->count <= 1000)
 		ft_draw_texture(aff, x, y, &aff->info->r);
-	if (aff->count > 100000 && aff->count <= 200000)
+	if (aff->count > 1000 && aff->count <= 2000)
 		ft_draw_texture(aff, x, y, &aff->info->s);
-	if (aff->count > 200000 && aff->count <= 300000)
+	if (aff->count > 2000 && aff->count <= 3000)
 		ft_draw_texture(aff, x, y, &aff->info->sp);
-	if (aff->count > 300000 && aff->count <= 400000)
+	if (aff->count > 3000 && aff->count <= 4000)
 		ft_draw_texture(aff, x, y, &aff->info->spr);
-	if (aff->count > 400000 && aff->count <= 500000)
+	if (aff->count > 4000 && aff->count <= 5000)
 		ft_draw_texture(aff, x, y, &aff->info->spri);
-	aff->count++;
-	if (aff->count >= 500001)
-		aff->count = 0;
 }
