@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:19:55 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/12 16:54:42 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:30:46 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ char	*ft_chr_line(char *dest, int *i)
 	return (line);
 }
 
+int	ft_fill_arg_2(char *line, t_info *info)
+{
+	if (line[0] == 'S' && line[1] == '4' && line[2] == ' ')
+		return (ft_charg_img(&info->spri, line, info));
+	free(line);
+	if (!info->no.img || !info->so.img || !info->we.img || !info->ea.img
+		|| !info->door.img || !info->r.img || !info->s.img || !info->sp.img
+		|| !info->spr.img || !info->spri.img || info->ceiling.b == -1
+		|| info->ground.b == -1)
+		return (print_error_message(ERRCODE_LINE));
+	return (-1);
+}
+
 int	ft_fill_arg(char *line, t_info *info)
 {
 	if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
@@ -55,11 +68,15 @@ int	ft_fill_arg(char *line, t_info *info)
 		return (ft_charg_color(&info->ground, line));
 	else if (line[0] == 'C' && line[1] == ' ')
 		return (ft_charg_color(&info->ceiling, line));
-	free(line);
-	if (!info->no.img || !info->so.img || !info->we.img || !info->ea.img
-		|| !info->door.img || info->ceiling.b == -1 || info->ground.b == -1)
-		return (print_error_message(ERRCODE_LINE));
-	return (-1);
+	else if (line[0] == 'S' && line[1] == '0' && line[2] == ' ')
+		return (ft_charg_img(&info->r, line, info));
+	else if (line[0] == 'S' && line[1] == '1' && line[2] == ' ')
+		return (ft_charg_img(&info->s, line, info));
+	else if (line[0] == 'S' && line[1] == '2' && line[2] == ' ')
+		return (ft_charg_img(&info->sp, line, info));
+	else if (line[0] == 'S' && line[1] == '3' && line[2] == ' ')
+		return (ft_charg_img(&info->spr, line, info));
+	return (ft_fill_arg_2(line, info));
 }
 
 int	ft_init_arg(t_info *info, char *dest)

@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:56:48 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/13 10:40:58 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:44:35 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	ft_mouse_move(int x, int y, t_aff *aff)
 {
 	if (x > WIDTH / 2)
 	{
-		ft_droite(aff);
+		ft_right(aff);
 	}
 	else if (x < WIDTH / 2)
 	{
-		ft_gauche(aff);
+		ft_left(aff);
 	}
 	x = WIDTH / 2;
 	y = HEIGHT / 2;
@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "cub3d");
 	if (!info->win)
 		return (ft_exit(aff));
-	//mlx_mouse_hide(info->mlx, info->win);
+	mlx_mouse_hide(info->mlx, info->win);
 	mlx_hook(info->win, 6, (1L << 6), ft_mouse_move, aff);
 	mlx_hook(info->win, 2, 1, ft_controls, aff);
 	aff->count = 0;

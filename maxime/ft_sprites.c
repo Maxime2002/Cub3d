@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sprites.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlangloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 20:16:22 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/12 20:16:24 by mlangloi         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:42:28 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_lettre(t_aff *aff)
+void	ft_letter(t_aff *aff)
 {
 	if (aff->info->map[aff->map_x][aff->map_y] == '1')
 	{
@@ -31,7 +31,7 @@ void	ft_lettre(t_aff *aff)
 	}
 }
 
-void	ft_init_sprites2(t_aff *aff)
+void	ft_init_sprites(t_aff *aff)
 {
 	aff->info->r.addr = (int *)mlx_get_data_addr(aff->info->r.img,
 			&aff->info->r.bpp,
@@ -48,21 +48,6 @@ void	ft_init_sprites2(t_aff *aff)
 	aff->info->spri.addr = (int *)mlx_get_data_addr(aff->info->spri.img,
 			&aff->info->spri.bpp,
 			&aff->info->spri.line_length, &aff->info->spri.endian);
-}
-
-void	ft_init_sprites(t_aff *aff)
-{
-	aff->info->r.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/r.xpm", &aff->info->r.w, &aff->info->r.h);
-	aff->info->s.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/S.xpm", &aff->info->s.w, &aff->info->s.h);
-	aff->info->sp.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sp.xpm", &aff->info->sp.w, &aff->info->sp.h);
-	aff->info->spr.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.h);
-	aff->info->spri.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.h);
-	ft_init_sprites2(aff);
 }
 
 void	ft_sprites(t_aff *aff, int x, int y)

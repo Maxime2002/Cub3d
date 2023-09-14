@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:36:02 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/13 18:37:03 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:35:02 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	ft_mini_map2(t_aff *aff, int x, int y)
 			while (x < (int)aff->pos_y + 6 && x++ > -99)
 				ft_affi_cub(aff, 0xFFFFFF, 0);
 		}
-		else if (x < (int)aff->pos_y + 6 && aff->info->map[y][x] == '1')
+		else if (x < (int)aff->pos_y + 6 && (aff->info->map[y][x] == '1'
+			|| aff->info->map[y][x] == 'X'))
 			ft_affi_cub(aff, 0x000000, 0);
 		else
 			ft_affi_cub(aff, 0xFFFFFF, 0);

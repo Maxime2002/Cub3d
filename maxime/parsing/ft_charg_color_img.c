@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:44:37 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/12 16:47:56 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:06:55 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ int	ft_charg_img(t_img *img, char *line, t_info *info)
 	free(line);
 	if (!img->img)
 		return (print_error_message(ERRCODE_XPM_FILE));
+	if (img->w != 64 || img->h != 64)
+		return (print_error_message(ERRCODE_SIZE_IMG));
 	return (0);
 }

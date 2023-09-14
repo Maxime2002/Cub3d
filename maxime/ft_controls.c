@@ -6,13 +6,13 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:58:36 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/12 15:12:16 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:50:57 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_droite(t_aff *aff)
+void	ft_right(t_aff *aff)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -29,7 +29,7 @@ void	ft_droite(t_aff *aff)
 		* cos(-(0.033 * 1.8) / 2);
 }
 
-void	ft_gauche(t_aff *aff)
+void	ft_left(t_aff *aff)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -46,7 +46,7 @@ void	ft_gauche(t_aff *aff)
 		* cos((0.033 * 1.8) / 2);
 }
 
-void	ft_reculer(t_aff *aff)
+void	ft_down(t_aff *aff)
 {
 	if (aff->info->map[(int)(aff->pos_x - (aff->dir_x
 				* 0.1 * 2))][(int)(aff->pos_y)] == '0' ||
@@ -60,9 +60,9 @@ void	ft_reculer(t_aff *aff)
 		aff->pos_y -= aff->dir_y * 0.1;
 }
 
-void	ft_avancer_reculer(int touche, t_aff *aff)
+void	ft_up_down(int key, t_aff *aff)
 {
-	if (touche == 119)
+	if (key == 119)
 	{
 		if (aff->info->map[(int)(aff->pos_x + (aff->dir_x
 					* 0.1 * 2))][(int)aff->pos_y] == '0' ||
@@ -75,15 +75,15 @@ void	ft_avancer_reculer(int touche, t_aff *aff)
 				+ (aff->dir_y * 0.1 * 2))] == 'z')
 			aff->pos_y += aff->dir_y * 0.1;
 	}
-	if (touche == 115)
+	if (key == 115)
 	{
-		ft_reculer(aff);
+		ft_down(aff);
 	}
 }
 
-void	ft_droite_gauche(int touche, t_aff *aff)
+void	ft_right_left(int key, t_aff *aff)
 {
-	if (touche == 100)
+	if (key == 100)
 	{
 		if (aff->info->map[(int)(aff->pos_x + aff->dir_y * (0.1
 					* 2))][(int)aff->pos_y] == '0' ||
@@ -95,7 +95,7 @@ void	ft_droite_gauche(int touche, t_aff *aff)
 				[(int)(aff->pos_y - aff->dir_x * (0.1 * 2))] == 'z')
 			aff->pos_y -= aff->dir_x * 0.1;
 	}
-	if (touche == 97)
+	if (key == 97)
 	{
 		if (aff->info->map[(int)(aff->pos_x - aff->dir_y
 				* (0.1 * 2))][(int)aff->pos_y] == '0' ||

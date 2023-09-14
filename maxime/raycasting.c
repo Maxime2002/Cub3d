@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:30:01 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/13 16:35:37 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:42:28 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_render3(t_aff *aff)
 			aff->map_y += aff->step_y;
 			aff->side = 1;
 		}
-		ft_lettre(aff);
+		ft_letter(aff);
 	}
 }
 

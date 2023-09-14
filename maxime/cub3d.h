@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:02:01 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/13 16:56:30 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:50:57 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@
 # define ERRMSG_NEW_IMAGE "Error\nCreating main image.\n"
 # define ERRCODE_SAME_LINE 17
 # define ERRMSG_SAME_LINE "Error\nSame line in file.\n"
+# define ERRCODE_SIZE_IMG 18
+# define ERRMSG_SIZE_IMG "Error\nImages must be 64x64.\n"
 
 /* ==================== include ==================== */
 
@@ -108,9 +110,6 @@ typedef struct s_info
 	t_img		sp;
 	t_img		spr;
 	t_img		spri;
-	t_img		sprit;
-	t_img		sprite;
-	t_img		sprites;
 	t_color		ceiling;
 	t_color		ground;
 
@@ -185,7 +184,6 @@ void			spawn_player(t_aff *aff);
 /* ==================== function error ==================== */
 
 int				print_error_message(int error_code);
-void			*print_error_message_null(int error_code);
 int				print_error_message_val(int error_code, int code);
 
 /* ==================== function utils ==================== */
@@ -221,15 +219,15 @@ void			ft_draw_texture(t_aff *aff, int x, int y, t_img *texture);
 void			ft_mini_map(t_aff *aff);
 /* ==================== function controls ==================== */
 
-void			ft_droite(t_aff *aff);
-void			ft_gauche(t_aff *aff);
-int				ft_controls(int touche, t_aff *aff);
-void			ft_avancer_reculer(int touche, t_aff *aff);
-void			ft_droite_gauche(int touche, t_aff *aff);
+void			ft_right(t_aff *aff);
+void			ft_left(t_aff *aff);
+int				ft_controls(int key, t_aff *aff);
+void			ft_up_down(int key, t_aff *aff);
+void			ft_right_left(int key, t_aff *aff);
 
 /* ==================== function sprites ==================== */
 
-void			ft_lettre(t_aff *aff);
+void			ft_letter(t_aff *aff);
 void			ft_init_sprites(t_aff *aff);
 void			ft_sprites(t_aff *aff, int x, int y);
 

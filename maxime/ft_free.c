@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 18:59:25 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/09/07 15:23:54 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:28:48 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ void	ft_free_img_sprites(t_info *info)
 		mlx_destroy_image(info->mlx, info->spr.img);
 	if (info->spri.img != NULL)
 		mlx_destroy_image(info->mlx, info->spri.img);
-	if (info->sprit.img != NULL)
-		mlx_destroy_image(info->mlx, info->sprit.img);
-	if (info->sprite.img != NULL)
-		mlx_destroy_image(info->mlx, info->sprite.img);
-	if (info->sprites.img != NULL)
-		mlx_destroy_image(info->mlx, info->sprites.img);
 }
 
 int	ft_free_img(t_info *info)

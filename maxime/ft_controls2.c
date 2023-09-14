@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_controls2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlangloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:45:43 by mlangloi          #+#    #+#             */
-/*   Updated: 2023/09/12 18:45:44 by mlangloi         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:50:57 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_porte(t_aff *aff)
+int	ft_door(t_aff *aff)
 {
 	int	res;
 
@@ -36,7 +36,7 @@ int	ft_porte(t_aff *aff)
 	return (res);
 }
 
-void	ft_porte2(t_aff *aff)
+void	ft_door2(t_aff *aff)
 {
 	if (aff->info->map[(int)(aff->pos_x + (aff->dir_x
 				* 0.5 * 2))][(int)aff->pos_y] == 'z' &&
@@ -50,20 +50,20 @@ void	ft_porte2(t_aff *aff)
 				+ (aff->dir_y * 0.5 * 2))] = 'P';
 }
 
-int	ft_controls(int touche, t_aff *aff)
+int	ft_controls(int key, t_aff *aff)
 {
-	if (touche == 65363)
-		ft_droite(aff);
-	if (touche == 65361)
-		ft_gauche(aff);
-	ft_avancer_reculer(touche, aff);
-	ft_droite_gauche(touche, aff);
-	if (touche == 32)
+	if (key == 65363)
+		ft_right(aff);
+	if (key == 65361)
+		ft_left(aff);
+	ft_up_down(key, aff);
+	ft_right_left(key, aff);
+	if (key == 32)
 	{
-		if (ft_porte(aff) == 0)
-			ft_porte2(aff);
+		if (ft_door(aff) == 0)
+			ft_door2(aff);
 	}
-	if (touche == 65307)
+	if (key == 65307)
 		ft_exit(aff);
 	return (0);
 }

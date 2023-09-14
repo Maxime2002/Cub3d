@@ -33,7 +33,7 @@ OBJ =	${SRCS:.c=.o}
 
 CC =	gcc
 
-CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror #-g -fsanitize=address
 
 .c.o:
 		$(CC) $(CFLAGS) -Iminilibx-linux  -Imlx_linux -c $< -o $(<:.c=.o)
