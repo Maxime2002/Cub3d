@@ -48,15 +48,6 @@ void	ft_init_sprites2(t_aff *aff)
 	aff->info->spri.addr = (int *)mlx_get_data_addr(aff->info->spri.img,
 			&aff->info->spri.bpp,
 			&aff->info->spri.line_length, &aff->info->spri.endian);
-	aff->info->sprit.addr = (int *)mlx_get_data_addr(aff->info->sprit.img,
-			&aff->info->sprit.bpp,
-			&aff->info->sprit.line_length, &aff->info->sprit.endian);
-	aff->info->sprite.addr = (int *)mlx_get_data_addr(aff->info->sprite.img,
-			&aff->info->sprite.bpp,
-			&aff->info->sprite.line_length, &aff->info->sprite.endian);
-	aff->info->sprites.addr = (int *)mlx_get_data_addr(aff->info->sprites.img,
-			&aff->info->sprites.bpp,
-			&aff->info->sprites.line_length, &aff->info->sprites.endian);
 }
 
 void	ft_init_sprites(t_aff *aff)
@@ -71,35 +62,22 @@ void	ft_init_sprites(t_aff *aff)
 			"./asset/Spr.xpm", &aff->info->spr.w, &aff->info->spr.h);
 	aff->info->spri.img = mlx_xpm_file_to_image(aff->info->mlx,
 			"./asset/Spri.xpm", &aff->info->spri.w, &aff->info->spri.h);
-	aff->info->sprit.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprit.xpm", &aff->info->sprit.w, &aff->info->sprit.h);
-	aff->info->sprite.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprite.xpm", &aff->info->sprite.w, &aff->info->sprite.h);
-	aff->info->sprites.img = mlx_xpm_file_to_image(aff->info->mlx,
-			"./asset/Sprites.xpm", &aff->info->sprites.w,
-			&aff->info->sprites.h);
 	ft_init_sprites2(aff);
 }
 
 void	ft_sprites(t_aff *aff, int x, int y)
 {
-	if (aff->count <= 10000)
+	if (aff->count <= 100000)
 		ft_draw_texture(aff, x, y, &aff->info->r);
-	if (aff->count > 10000 && aff->count <= 20000)
+	if (aff->count > 100000 && aff->count <= 200000)
 		ft_draw_texture(aff, x, y, &aff->info->s);
-	if (aff->count > 20000 && aff->count <= 30000)
+	if (aff->count > 200000 && aff->count <= 300000)
 		ft_draw_texture(aff, x, y, &aff->info->sp);
-	if (aff->count > 30000 && aff->count <= 40000)
+	if (aff->count > 300000 && aff->count <= 400000)
 		ft_draw_texture(aff, x, y, &aff->info->spr);
-	if (aff->count > 40000 && aff->count <= 50000)
+	if (aff->count > 400000 && aff->count <= 500000)
 		ft_draw_texture(aff, x, y, &aff->info->spri);
-	if (aff->count > 50000 && aff->count <= 60000)
-		ft_draw_texture(aff, x, y, &aff->info->sprit);
-	if (aff->count > 60000 && aff->count <= 70000)
-		ft_draw_texture(aff, x, y, &aff->info->sprite);
-	if (aff->count > 70000 && aff->count <= 80000)
-		ft_draw_texture(aff, x, y, &aff->info->sprites);
 	aff->count++;
-	if (aff->count == 80001)
+	if (aff->count >= 500001)
 		aff->count = 0;
 }
