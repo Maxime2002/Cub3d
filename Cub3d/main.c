@@ -32,14 +32,12 @@ int	ft_exit(t_aff *aff)
 
 int	ft_mouse_move(int x, int y, t_aff *aff)
 {
+	if (x == WIDTH / 2)
+		return (0);
 	if (x > WIDTH / 2)
-	{
 		ft_right(aff);
-	}
 	else if (x < WIDTH / 2)
-	{
 		ft_left(aff);
-	}
 	x = WIDTH / 2;
 	y = HEIGHT / 2;
 	mlx_mouse_move(aff->info->mlx, aff->info->win, x, y);
